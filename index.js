@@ -13,5 +13,10 @@ app.listen(process.env.PORT || 8080, () => {
 });
 
 app.get("/", (req, res) => {
-	res.status(200).send("Eazylearn backend");
+	try {
+		sequelize.authenticate();
+		res.status(200).send("Eazylearn Backend");
+	} catch (err) {
+		res.status(500).send(err);
+	}
 });
