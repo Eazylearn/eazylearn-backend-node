@@ -1,7 +1,8 @@
-const { sequelize } = require("../config/database");
 const { DataTypes } = require("sequelize");
-const { Student } = require("./student");
-const { Quiz } = require("./quiz");
+
+const sequelize = require("../config/database");
+const Student = require("./student");
+const Quiz = require("./quiz");
 
 const Result = sequelize.define(
 	"result",
@@ -35,4 +36,4 @@ const Result = sequelize.define(
 
 Result.belongsTo(Student, { foreignKey: "student_id" });
 Result.belongsTo(Quiz, { foreignKey: "quiz_id" });
-module.exports = { Result: Result };
+module.exports = Result;

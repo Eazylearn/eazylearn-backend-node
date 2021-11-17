@@ -1,6 +1,7 @@
-const { sequelize } = require("../config/database");
 const { DataTypes } = require("sequelize");
-const { Question } = require("./question");
+
+const sequelize = require("../config/database");
+const Question = require("./question");
 
 const Option = sequelize.define(
 	"option",
@@ -24,4 +25,4 @@ const Option = sequelize.define(
 );
 
 Option.belongsTo(Question, { foreignKey: "question_id" });
-module.exports = { Option: Option };
+module.exports = Option;
