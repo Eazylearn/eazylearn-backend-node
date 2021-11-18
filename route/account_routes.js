@@ -11,7 +11,7 @@ router.post("/signup", async (req, res) => {
 		token = await userService.signUp(req.body);
 		return res.status(200).json({ status: "OK", token: token });
 	} catch (err) {
-		return res.status(err.statusCode).json(err.message);
+		return res.status(err.statusCode).json(err);
 	}
 });
 
@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
 		token = await userService.login(req.body);
 		return res.status(200).json({ status: "OK", token: token });
 	} catch (err) {
-		return res.status(err.statusCode).json(err.message);
+		return res.status(err.statusCode).json(err);
 	}
 });
 

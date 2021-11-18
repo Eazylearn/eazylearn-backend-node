@@ -12,15 +12,19 @@ function generateToken(account_id, type) {
 class AccountService {
 	async signUp(user) {
 		const { username, password, type } = user;
-		if (!username || !password || !type) throw new Error("Bad request", 400);
+		if (!username || !password || type === null || type < 0 || type > 2)
+			throw new Error("Bad request", 400);
 
-		const createdUser = await Account.create({
-			account_id: username,
-			password: password,
-			type: type,
-		});
-
-		return generateToken(createdUser.account_id, createdUser.type);
+		try {
+			const createdUser = await Account.create({
+				account_id: username,
+				password: password,
+				type: type,
+			});
+			return generateToken(createdUser.account_id, createdUser.type);
+		} catch (err) {
+			throw new Error(err.errors[0].message, 500);
+		}
 	}
 
 	async login(user) {
@@ -30,7 +34,7 @@ class AccountService {
 				account_id: username,
 			},
 		});
-
+		if (result === null) throw new Error("Account not found!", 400);
 		if (result.password === password)
 			return generateToken(result.account_id, result.type);
 		else throw new Error("Invalid credential!", 400);
