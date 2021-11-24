@@ -3,10 +3,11 @@ const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
 	var token = req.headers.authorization;
-	if (token.split(" ")[0] === "Bearer") token = token.split(" ")[1];
 	if (!token) {
 		return res.status(403).send("A token is required for authentication");
 	}
+	if (token.split(" ")[0] === "Bearer") token = token.split(" ")[1];
+
 	try {
 		const decoded = jwt.verify(token, process.env.TOKEN_KEY);
 		console.log(decoded);

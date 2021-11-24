@@ -1,12 +1,11 @@
 const router = require("express").Router();
 
 const auth = require("../middleware/auth");
-const sequelize = require("../config/database");
 const AccountService = require("../service/account_service");
 
 const userService = new AccountService();
 
-router.post("/signup", async (req, res) => {
+router.post("/create", async (req, res) => {
 	try {
 		token = await userService.signUp(req.body);
 		return res.status(200).json({ status: "OK", token: token });
