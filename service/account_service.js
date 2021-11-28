@@ -24,18 +24,24 @@ class AccountService {
 			);
 			return generateToken(createdUser.account_id, createdUser.type);
 		} catch (err) {
-			throw new Error(err.errors[0].message, 500);
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw new Error(err.message, err.statusCode);
 		}
 	}
 
 	async login(user) {
 		const { username, password } = user;
-		const result = await accountRepository.findAccount(username);
+		try {
+			const result = await accountRepository.findAccount(username);
 
-		if (result === null) throw new Error("Account not found!", 404);
-		if (result.password === password)
-			return generateToken(result.account_id, result.type);
-		else throw new Error("Invalid credential!", 400);
+			if (result === null) throw new Error("Account not found!", 404);
+			if (result.password === password)
+				return generateToken(result.account_id, result.type);
+			else throw new Error("Invalid credential!", 400);
+		} catch (err) {
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw new Error(err.message, err.statusCode);
+		}
 	}
 }
 

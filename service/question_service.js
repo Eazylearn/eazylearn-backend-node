@@ -29,8 +29,7 @@ class QuestionService {
 			throw Error(err[0].message, 500);
 		}
 	}
-	async deleteQuestionByID(id, type) {
-		if (type !== 1 || type !== 0) throw new Error("Unauthorized", 401);
+	async deleteQuestionByID(id) {
 		try {
 			const result = await questionRepository.deleteQuestionByID(id);
 			return result;

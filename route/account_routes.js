@@ -23,8 +23,4 @@ router.post("/login", async (req, res) => {
 	}
 });
 
-router.get("/blabla", auth, (req, res) => {
-	return res.status(200).send({ user: req.user });
-});
-
 module.exports = router;
