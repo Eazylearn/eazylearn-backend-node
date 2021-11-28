@@ -1,34 +1,75 @@
 const Question = require("../model/question");
-class QuestionRepository{
-    async createQuestion(id, Content){
-        const newQuestion = await Question.create({
-			question_id: id,
-			question_content: Content,
-		});
-		return newQuestion;
-    }
-    async getQuestionByID(QuestionID){
-        try {
-			const question = await Question.findOne({
+const QuizQuestion = require("../model/quiz_question");
+class QuestionRepository {
+	async getQuestionIDByQuizID(quizID) {
+		try {
+			const questionID = await QuizQuestion.findAll({
 				where: {
-					question_id: QuestionID,
+					quiz_ID: quizID,
 				},
+				
 			});
-			return question;
-		} catch(err) {
+
+			const result = [];
+			questionID.forEach((c) => result.push(c.questionID));
+			return result;
+		} catch (err) {
+			console.log(err);
 			throw err;
 		}
-    }
-	async updateQuestionByID(qid, id, content){
+	}
+    async getQuestionByID(ID) {
 		try {
-			const result = await Question.update(
+			const question = await Question.findAll({
+				where: {
+					question_id: getQuestionIDByID(ID),
+				},
+				
+			});
+
+			const result = [];
+			question.forEach((c) => result.push(c.question));
+			return result;
+		} catch (err) {
+			console.log(err);
+			throw err;
+		}
+	}
+    async deleteQuestionByID(id) {
+		try {
+			const result = await Question.destroy({
+				where: {
+					question_id: id,
+				},
+			});
+			return result;
+		}  catch (err) {
+			console.log(err);
+			throw err;
+		}
+	}
+	
+	async createQuestionByID(id, Content) {
+		try {
+			const result = await Question.create({
+				question_id: id,
+			    question_content: Content,
+			});
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
+	async updateQuestionByID(id, Content){
+		try {
+			const result = await Course.update(
 				{
 					question_id: id,
-					question_content: content
+			        question_content: Content,
 				},
 				{
 					where: {
-						course_id: qid,
+						question_id: id,
 					},
 				}
 			);
@@ -36,18 +77,7 @@ class QuestionRepository{
 		} catch (err) {
 			throw err;
 		}
-	}
-	async deleteQuestionByID(id) {
-		try {
-			return await Question.destroy({
-				where: {
-					question_id: id,
-				},
-			});
-		} catch (err) {
-		throw err;
-		}	
-	}
+	}	
 }
 
 module.exports = QuestionRepository;

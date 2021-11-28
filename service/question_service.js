@@ -4,24 +4,40 @@ const Error = require("../model/error");
 const questionRepository = new QuestionRepository();
 
 class QuestionService {
-    /* (sample :v)
-	async getCourseBySemseter(sem, user) {
+	
+    async getQuestionByID(ID) {
 		try {
 			var result;
-			if (user.type === 2)
-				result = await courseRepository.getCourseByStudentID(
-					user.account_id,
-					sem
+				result = await questionRepository.getQuestionID(
+					ID
 				);
-			else if (user.type === 1)
-				result = await courseRepository.getCourseByLecturerID(user.account_id);
+			
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
 	}
-    */
-	async createQuestion(question) {
+    async getQuestionIDByQuizID(quiz_id) {
+		try {
+			var result;
+				result = await questionRepository.getQuestionByQuizID(
+					quiz_id
+				);
+			
+			return result;
+		} catch (err) {
+			throw Error(err[0].message, 500);
+		}
+	}
+	async deleteQuestionByID(id) {
+		try {
+			const result = await questionRepository.deleteQuestionByID(id);
+			return result;
+			}
+	    catch (err) {
+			throw Error(err[0].message, 500);
+		}
+	}async createQuestion(question) {
 		if (type !== 1) throw new Error("Unauthorized", 401);
 		try {
 			const { id, content} = question;
@@ -40,15 +56,15 @@ class QuestionService {
 			throw new Error(err.message, err.statusCode);
 		}
 	}
-    async updateQuestionByID(qid, question){
+	async updateQuestionByID(qid, question) {
 		const { id, content } = question;
-		
 		if (
-			id == null || qid==null
-		)
+			qid == null ||
+			id == null 
+			)
 			throw new Error("Bad request", 401);
 		try {
-			const result = await questionRepository.updateQuestionByID(
+			const result = await courseRepository.updateQuestionByID(
 				qid,
 				id,
 				content
@@ -59,25 +75,6 @@ class QuestionService {
 			throw new Error(err.message, err.statusCode);
 		}
 	}
-	async getQuestionByID(id) {
-		try {
-			const result = await questionRepository.getQuestionByID(id);
-			if (result == null) throw new Error("Not found", 404);
-			return result;
-		} catch (err) {
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
-		}
-	}
-	async deleteQuestionByID(id) {
-		try {
-			const result = await questionRepository.deleteQuestionByID(id);
-			return result;
-		} catch (err) {
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw Error(err[0].message, 500);
-		}
-	}
 }
 
-module.exports = QuestionService;
+module.exports = CourseService;
