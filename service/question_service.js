@@ -77,4 +77,4 @@ class QuestionService {
 	}
 }
 
-module.exports = CourseService;
+module.exports = QuestionService;
