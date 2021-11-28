@@ -54,7 +54,7 @@ router.delete("/DeleteQuestion", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.post("/UpdateQuestion", auth, async (req, res) => {
+router.post("/CreateQuestion", auth, async (req, res) => {
 	try {
 		const type = req.user.type;
 		if (type !== 1) throw new Error("Unauthorized", 401);
