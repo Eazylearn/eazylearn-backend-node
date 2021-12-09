@@ -61,7 +61,7 @@ class LecturerRepository {
 			throw err;
 		}
 	}
-	async updateLecturerByID(id,  name ,accountID){
+	async updateLecturerByID(qid, id,  name ,accountID){
 		try {
 			const result = await Course.update(
 				{
@@ -71,7 +71,7 @@ class LecturerRepository {
 				},
 				{
 					where: {
-						question_id: id,
+						lecturer_id: qid,
 					},
 				}
 			);

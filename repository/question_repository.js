@@ -60,7 +60,7 @@ class QuestionRepository {
 			throw err;
 		}
 	}
-	async updateQuestionByID(id, Content){
+	async updateQuestionByID(qid, id, Content){
 		try {
 			const result = await Course.update(
 				{
@@ -69,7 +69,7 @@ class QuestionRepository {
 				},
 				{
 					where: {
-						question_id: id,
+						question_id: qid,
 					},
 				}
 			);
