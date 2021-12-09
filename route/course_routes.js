@@ -2,6 +2,8 @@ const router = require("express").Router();
 
 const auth = require("../middleware/auth");
 const CourseService = require("../service/course_service");
+const LecturerService = require("../service/lecturer_service");
+
 const Error = require("../model/error");
 const courseService = new CourseService();
 
@@ -52,7 +54,18 @@ router.get("/", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
-
+router.get("/lecturer", auth, async (req, res) => {
+	try {
+		const courseID = req.query.id;
+		if (courseID != null) {
+			const result = await LecturerService.getLecturerByID(courseID);
+			return res.status(200).json({ status: "OK", course: result });
+		}
+	
+	} catch (err) {
+		return res.status(err.statusCode).json(err);
+	}
+});
 router.put("/", auth, async (req, res) => {
 	try {
 		const type = req.user.type;
