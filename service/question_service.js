@@ -6,8 +6,8 @@ const questionRepository = new QuestionRepository();
 class QuestionService {
 	
     async getQuestionByID(ID) {
+		var result;
 		try {
-			var result;
 				result = await questionRepository.getQuestionID(
 					ID
 				);
@@ -18,12 +18,14 @@ class QuestionService {
 		}
 	}
     async getQuestionIDByQuizID(quiz_id) {
+		var result;
+
 		try {
-			var result;
-				result = await questionRepository.getQuestionByQuizID(
+				result = await questionRepository.getQuestionIDByQuizID(
 					quiz_id
 				);
 			
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
@@ -33,23 +35,16 @@ class QuestionService {
 		try {
 			const result = await questionRepository.deleteQuestionByID(id);
 			return result;
-			}
-	    catch (err) {
+		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
-	}async createQuestion(question) {
+	}
+	async createQuestion(question) {
 		if (type !== 1) throw new Error("Unauthorized", 401);
 		try {
-			const { id, content} = question;
-			if (
-				id == null ||
-				content == null
-			)
-				throw new Error("Bad request", 400);
-			const result = await questionRepository.createQuestion(
-				id,
-				content
-			);
+			const { id, content } = question;
+			if (id == null || content == null) throw new Error("Bad request", 400);
+			const result = await questionRepository.createQuestion(id, content);
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
@@ -58,11 +53,7 @@ class QuestionService {
 	}
 	async updateQuestionByID(qid, question) {
 		const { id, content } = question;
-		if (
-			qid == null ||
-			id == null 
-			)
-			throw new Error("Bad request", 401);
+		if (qid == null || id == null) throw new Error("Bad request", 400);
 		try {
 			const result = await courseRepository.updateQuestionByID(
 				qid,

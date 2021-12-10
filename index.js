@@ -1,10 +1,16 @@
 const Express = require("express");
 const sequelize = require("./config/database");
 const routes = require("./route/index");
+const cors = require("cors");
 
 var app = Express();
 
 app.use(Express.json());
+app.use(
+	cors({
+		origin: process.env.ORIGIN,
+	})
+);
 app.use(routes);
 
 app.listen(process.env.PORT || 8080, async () => {

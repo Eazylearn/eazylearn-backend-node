@@ -5,17 +5,17 @@ const QuestionService = require("../service/question_service");
 
 const questionService = new QuestionService();
 
-router.get("/GetQuestion", auth, async (req, res) => {
+router.get("/GetQuestionByID", auth, async (req, res) => {
 	try {
 		if (type !== 1 ||type !== 2) throw new Error("Unauthorized", 401);
 		const id = req.query.id;
-		const question = await questionService.getQuestionByQuizID(id);
+		const question = await questionService.getQuestionByID(id);
 		return res.status(200).json({ status: "OK", question: question });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.get("/GetQuestionByQuizID", auth, async (req, res) => {
+router.get("/GetQuestionIDByQuizID", auth, async (req, res) => {
 	try {
 		if (type !== 1 ||type !== 2) throw new Error("Unauthorized", 401);
 		const quiz_id = req.query.quiz_id;

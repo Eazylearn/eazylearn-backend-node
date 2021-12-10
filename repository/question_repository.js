@@ -7,7 +7,6 @@ class QuestionRepository {
 				where: {
 					quiz_ID: quizID,
 				},
-				
 			});
 
 			const result = [];
@@ -18,13 +17,12 @@ class QuestionRepository {
 			throw err;
 		}
 	}
-    async getQuestionByID(ID) {
+	async getQuestionByID(ID) {
 		try {
 			const question = await Question.findAll({
 				where: {
-					question_id: getQuestionIDByID(ID),
+					question_id: ID,
 				},
-				
 			});
 
 			const result = [];
@@ -35,7 +33,7 @@ class QuestionRepository {
 			throw err;
 		}
 	}
-    async deleteQuestionByID(id) {
+	async deleteQuestionByID(id) {
 		try {
 			const result = await Question.destroy({
 				where: {
@@ -43,33 +41,34 @@ class QuestionRepository {
 				},
 			});
 			return result;
-		}  catch (err) {
+		} catch (err) {
 			console.log(err);
 			throw err;
 		}
 	}
-	
+
 	async createQuestionByID(id, Content) {
 		try {
 			const result = await Question.create({
 				question_id: id,
-			    question_content: Content,
+				question_content: Content,
 			});
 			return result;
 		} catch (err) {
 			throw err;
 		}
 	}
-	async updateQuestionByID(id, Content){
+	async updateQuestionByID(qid, id, Content){
+
 		try {
 			const result = await Course.update(
 				{
 					question_id: id,
-			        question_content: Content,
+					question_content: Content,
 				},
 				{
 					where: {
-						question_id: id,
+						question_id: qid,
 					},
 				}
 			);
@@ -77,7 +76,7 @@ class QuestionRepository {
 		} catch (err) {
 			throw err;
 		}
-	}	
+	}
 }
 
 module.exports = QuestionRepository;
