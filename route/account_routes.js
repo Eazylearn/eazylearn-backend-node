@@ -23,4 +23,12 @@ router.post("/login", async (req, res) => {
 	}
 });
 
+router.get("/", async (req, res) => {
+	try {
+		const result = await userService.getAccountByID(req.query.username);
+		return res.status(200).json({ status: "OK", user: result });
+	} catch (err) {
+		return res.status(err.statusCode).json(err);
+	}
+});
 module.exports = router;

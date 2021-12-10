@@ -25,14 +25,14 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
 	async assignStudentToCourse(body) {
 		const { studentID, courseID } = body;
 		if (studentID == null || courseID == null)
-			throw new Error("Bad request", 401);
+			throw new Error("Bad request", 400);
 		try {
 			const result = await courseRepository.assignStudentToCourse(
 				studentID,
@@ -42,14 +42,14 @@ class CourseService {
 		} catch (err) {
 			console.log(err);
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
 	async assignLecturerToCourse(body) {
 		const { lecturerID, courseID } = body;
 		if (lecturerID == null || courseID == null)
-			throw new Error("Bad request", 401);
+			throw new Error("Bad request", 400);
 		try {
 			const result = await courseRepository.assignLecturerToCourse(
 				lecturerID,
@@ -58,7 +58,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
@@ -69,7 +69,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
@@ -87,7 +87,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
@@ -102,7 +102,7 @@ class CourseService {
 			semester < 0 ||
 			semester > 3
 		)
-			throw new Error("Bad request", 401);
+			throw new Error("Bad request", 400);
 		try {
 			const result = await courseRepository.updateCourseByID(
 				qid,
@@ -114,7 +114,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
@@ -124,7 +124,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 

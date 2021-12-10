@@ -7,7 +7,6 @@ class LecturerRepository {
 				where: {
 					course_ID: courseID,
 				},
-				
 			});
 
 			const result = [];
@@ -18,13 +17,12 @@ class LecturerRepository {
 			throw err;
 		}
 	}
-    async getLecturerByID(ID) {
+	async getLecturerByID(ID) {
 		try {
 			const lecturer = await Lecturer.findAll({
 				where: {
 					lecture_id: ID,
 				},
-				
 			});
 
 			const result = [];
@@ -35,7 +33,7 @@ class LecturerRepository {
 			throw err;
 		}
 	}
-    async deleteLecturerByID(id) {
+	async deleteLecturerByID(id) {
 		try {
 			const result = await Lecturer.destroy({
 				where: {
@@ -43,31 +41,31 @@ class LecturerRepository {
 				},
 			});
 			return result;
-		}  catch (err) {
+		} catch (err) {
 			console.log(err);
 			throw err;
 		}
 	}
-	
-	async createLecturerByID(id, name ,accountID) {
+
+	async createLecturerByID(id, name, accountID) {
 		try {
 			const result = await Lecturer.create({
 				lecturer_id: id,
-			    lecturern_name: name,
-                account_id: accountID
+				lecturern_name: name,
+				account_id: accountID,
 			});
 			return result;
 		} catch (err) {
 			throw err;
 		}
 	}
-	async updateLecturerByID(qid, id,  name ,accountID){
+	async updateLecturerByID(qid, id, name, accountID) {
 		try {
 			const result = await Course.update(
 				{
 					lecturer_id: id,
-			        lecturern_name: name,
-                    account_id: accountID
+					lecturern_name: name,
+					account_id: accountID,
 				},
 				{
 					where: {
@@ -79,7 +77,7 @@ class LecturerRepository {
 		} catch (err) {
 			throw err;
 		}
-	}	
+	}
 }
 
 module.exports = LecturerRepository;
