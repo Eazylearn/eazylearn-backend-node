@@ -20,7 +20,7 @@ class QuestionService {
     async getQuestionIDByQuizID(quiz_id) {
 		try {
 			var result;
-				result = await questionRepository.getQuestionByQuizID(
+				result = await questionRepository.getQuestionIDByQuizID(
 					quiz_id
 				);
 			
