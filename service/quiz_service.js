@@ -6,8 +6,8 @@ const quizRepository = new QuizRepository();
 class QuizService {
 	
     async getQuizByID(ID) {
+		var result;
 		try {
-			var result;
 				result = await quizRepository.getQuizByID(
 					ID
 				);
@@ -18,8 +18,8 @@ class QuizService {
 		}
 	}
     async getQuizIDByCourseID(course_id) {
+		var result;
 		try {
-			var result;
 				result = await quizRepository.getQuizIDByCourseID(
 					course_id
 				);
