@@ -8,7 +8,7 @@ class QuizService {
     async getQuizByID(ID) {
 		try {
 			var result;
-				result = await quizRepository.getQuizID(
+				result = await quizRepository.getQuizByID(
 					ID
 				);
 			
@@ -20,7 +20,7 @@ class QuizService {
     async getQuizIDByCourseID(course_id) {
 		try {
 			var result;
-				result = await quizRepository.getQuizByQuizID(
+				result = await quizRepository.getQuizIDByCourseID(
 					course_id
 				);
 			

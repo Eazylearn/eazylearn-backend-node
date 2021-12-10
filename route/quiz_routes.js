@@ -5,16 +5,16 @@ const QuizService = require("../service/quiz_service");
 
 const quizService = new QuizService();
 
-router.get("/GetQuiz", auth, async (req, res) => {
+router.get("/GetQuizByID", auth, async (req, res) => {
 	try {
 		const id = req.query.id;
-		const quiz = await quizService.getQuizByQuizID(id);
+		const quiz = await quizService.getQuizByID(id);
 		return res.status(200).json({ status: "OK", quiz: quiz });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.get("/GetQuizByCourseID", auth, async (req, res) => {
+router.get("/GetQuizIDByCourseID", auth, async (req, res) => {
 	try {
 
 		const course_id = req.query.course_id;
