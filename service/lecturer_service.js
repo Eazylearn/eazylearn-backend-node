@@ -1,29 +1,24 @@
 const QuestionRepository = require("../repository/lecturer_repository");
 const Error = require("../model/error");
-
+const LecturerRepository = require("../repository/lecturer_repository");
 const lecturerRepository = new LecturerRepository();
 
 class LecturerService {
-	
-    async getLecturerByID(ID) {
+	async getLecturerByID(ID) {
 		try {
 			var result;
-				result = await lecturerRepository.getLecturerByID(
-					ID
-				);
-			
+			result = await lecturerRepository.getLecturerByID(ID);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
 	}
-    async getLecturerIDByCourseID(quiz_id) {
+	async getLecturerIDByCourseID(quiz_id) {
 		try {
 			var result;
-				result = await lecturerRepository.getLecturerIDByCourseID(
-					course_id
-				);
-			
+			result = await lecturerRepository.getLecturerIDByCourseID(course_id);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
@@ -33,24 +28,20 @@ class LecturerService {
 		try {
 			const result = await lecturerRepository.deleteLecturerByID(id);
 			return result;
-			}
-	    catch (err) {
+		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
-	}async createLecturer(lecturer) {
+	}
+	async createLecturer(lecturer) {
 		if (type !== 1) throw new Error("Unauthorized", 401);
 		try {
-			const { id, name, account_id} = lecturer;
-			if (
-				id == null ||
-				name == null ||
-                account_id == null
-			)
+			const { id, name, account_id } = lecturer;
+			if (id == null || name == null || account_id == null)
 				throw new Error("Bad request", 400);
 			const result = await lecturerRepository.createLecturer(
 				id,
 				name,
-                account_id
+				account_id
 			);
 			return result;
 		} catch (err) {
@@ -59,18 +50,14 @@ class LecturerService {
 		}
 	}
 	async updateLecturerByID(qid, lecturer) {
-		const  { id, name, account_id} = lecturer;
-		if (
-			qid == null ||
-			id == null 
-			)
-			throw new Error("Bad request", 401);
+		const { id, name, account_id } = lecturer;
+		if (qid == null || id == null) throw new Error("Bad request", 400);
 		try {
 			const result = await courseRepository.updateLecturerByID(
 				qid,
-                id,
+				id,
 				name,
-                account_id
+				account_id
 			);
 			return result;
 		} catch (err) {

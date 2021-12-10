@@ -25,7 +25,7 @@ class AccountService {
 			return generateToken(createdUser.account_id, createdUser.type);
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
@@ -34,13 +34,25 @@ class AccountService {
 		try {
 			const result = await accountRepository.findAccount(username);
 
-			if (result === null) throw new Error("Account not found!", 404);
+			if (result == null) throw new Error("Account not found!", 404);
 			if (result.password === password)
 				return generateToken(result.account_id, result.type);
 			else throw new Error("Invalid credential!", 400);
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
+		}
+	}
+
+	async getAccountByID(username) {
+		if (username == null) throw new Error("Bad request", 400);
+		try {
+			const result = await accountRepository.findAccountInfoByID(username);
+			if (result == null) throw new Error("Account not found!", 404);
+			return result;
+		} catch (err) {
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
 		}
 	}
 }
