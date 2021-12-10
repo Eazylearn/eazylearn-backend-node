@@ -4,21 +4,26 @@ const Error = require("../model/error");
 const quizRepository = new QuizRepository();
 
 class QuizService {
-	async getQuizByID(ID) {
+	
+    async getQuizByID(ID) {
+		var result;
 		try {
-			var result;
-			result = await quizRepository.getQuizID(ID);
-
+				result = await quizRepository.getQuizByID(
+					ID
+				);
+			
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
 	}
-	async getQuizIDByCourseID(course_id) {
+    async getQuizIDByCourseID(course_id) {
+		var result;
 		try {
-			var result;
-			result = await quizRepository.getQuizByQuizID(course_id);
-
+				result = await quizRepository.getQuizIDByCourseID(
+					course_id
+				);
+			
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
