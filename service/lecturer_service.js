@@ -6,8 +6,9 @@ const lecturerRepository = new LecturerRepository();
 class LecturerService {
 	
     async getLecturerByID(ID) {
+        var result;
 		try {
-			var result;
+			
 				result = await lecturerRepository.getLecturerByID(
 					ID
 				);
@@ -18,8 +19,9 @@ class LecturerService {
 		}
 	}
     async getLecturerIDByCourseID(quiz_id) {
+        var result;
 		try {
-			var result;
+			
 				result = await lecturerRepository.getLecturerIDByCourseID(
 					course_id
 				);

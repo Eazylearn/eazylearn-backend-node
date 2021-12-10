@@ -21,7 +21,7 @@ class QuestionRepository {
 		try {
 			const question = await Question.findAll({
 				where: {
-					question_id: getQuestionIDByID(ID),
+					question_id: ID,
 				},
 			});
 
