@@ -22,7 +22,7 @@ class LecturerRepository {
 		try {
 			const lecturer = await Lecturer.findAll({
 				where: {
-					lecture_id: getLecturerIDByCourseID(ID),
+					lecture_id: ID,
 				},
 				
 			});
@@ -82,4 +82,4 @@ class LecturerRepository {
 	}	
 }
 
-module.exports = LectureRepository;
+module.exports = LecturerRepository;
