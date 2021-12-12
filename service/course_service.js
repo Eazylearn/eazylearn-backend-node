@@ -15,7 +15,7 @@ class CourseService {
 				semester < 0 ||
 				semester > 3
 			)
-				throw new Error("Bad request", 400);
+				throw new Error("Bad request"+id+name+academicYear+semester, 400);
 			const result = await courseRepository.createCourse(
 				id,
 				name,
@@ -157,6 +157,32 @@ class CourseService {
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw new Error(err.message, err.statusCode);
+		}
+	}
+	async getLecturerByCourseID(course_id) {
+        
+		try {
+			   
+				const result = await courseRepository.getLecturerByCourseID(
+					course_id
+				);
+			
+			return result;
+		} catch (err) {
+			throw Error(err[0].message, 500);
+		}
+	}
+	async getCourseByAdmin(Page) {
+        
+		try {
+			   
+				const result = await courseRepository.getCourseByAdmin(
+					Page
+				);
+			
+			return result;
+		} catch (err) {
+			throw Error(err[0].message, 500);
 		}
 	}
 }

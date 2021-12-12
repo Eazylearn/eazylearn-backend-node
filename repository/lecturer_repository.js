@@ -1,12 +1,15 @@
 const Lecturer = require("../model/Lecturer");
 const LecturerCourse = require("../model/lecturer_course");
 class LecturerRepository {
-	async getLecturerIDByCourseID(courseID) {
+	async getLecturerByCourseID(courseID) {
 		try {
 			const lecturerID = await LecturerCourse.findAll({
 				where: {
-					course_ID: courseID,
+					course_id: courseID,
 				},
+				include:{
+					model: Lecturer
+				}
 			});
 
 			const result = [];

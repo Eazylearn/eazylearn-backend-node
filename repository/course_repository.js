@@ -1,6 +1,11 @@
 const Course = require("../model/course");
 const StudentCourse = require("../model/student_course");
 const LecturerCourse = require("../model/lecturer_course");
+const Lecturer = require("../model/lecturer");
+const Student = require("../model/student");
+//const { INTEGER } = require("sequelize/types");
+
+
 class CourseRepository {
 	async createCourse(id, name, academicYear, semester) {
 		try {
@@ -148,6 +153,69 @@ class CourseRepository {
 			throw err;
 		}
 	}
+	
+	async getLecturerByCourseID(courseID) {
+		try {
+			const lecturerID = await LecturerCourse.findAll({
+				where: {
+					course_id: courseID,
+				},
+				include:{
+					model: Lecturer
+				}
+			});
+			
+			const result = [];
+			lecturerID.forEach((c) => result.push(c.lecturer));
+			return result;
+		} catch (err) {
+			console.log(err);
+			throw err;
+		}
+	}
+	async getCourseByAdmin(Page) {
+		try {
+			const course = await Course.findAll({
+				
+			});
+			const test = await LecturerCourse.findAll({
+				include:[{
+					model:Course
+					
+				},
+				{
+					model:Lecturer
+				}]
+			});
+			const result = [];
+			
+			// course.forEach((c) => {  
+				
+			   
+		 	//   // const lec =  getLecturerByCourseID(c.course_id);
+				
+				
+			
+			// 	var data ={
+			// 	course_id: c.course_id,
+			// 	course_name: c.course_name,
+			// 	academic_year: c.academic_year,
+			// 	semester:c.semester,
+				
+			// 	//lecuter: lec,
+			// 	//student:{Student}
+			// }
+			 	//result.push(data)});
+			//course.forEach((c)=>result.push(c))
+			test.forEach((c)=>result.push(c))
+
+			return result;
+			
+		} catch (err) {
+			throw err;
+		}
+	}
 }
+
 
 module.exports = CourseRepository;
