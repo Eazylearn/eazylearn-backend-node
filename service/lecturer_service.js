@@ -18,11 +18,11 @@ class LecturerService {
 			throw Error(err[0].message, 500);
 		}
 	}
-    async getLecturerIDByCourseID(quiz_id) {
+    async getLecturerByCourseID(quiz_id) {
         var result;
 		try {
 			
-				result = await lecturerRepository.getLecturerIDByCourseID(
+				result = await lecturerRepository.getLecturerByCourseID(
 					course_id
 				);
 			

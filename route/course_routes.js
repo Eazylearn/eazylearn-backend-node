@@ -58,8 +58,8 @@ router.get("/lecturer", auth, async (req, res) => {
 	try {
 		const courseID = req.query.id;
 		if (courseID != null) {
-			const result = await LecturerService.getLecturerByID(courseID);
-			return res.status(200).json({ status: "OK", course: result });
+			const result = await courseService.getLecturerByCourseID(courseID);
+			return res.status(200).json({ status: "OK", lecturer: result });
 		}
 	
 	} catch (err) {
@@ -119,6 +119,18 @@ router.delete("/remove/lecturer", auth, async (req, res) => {
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
+	
 });
-
+router.get("/admin", auth, async (req, res) => {
+	try {
+		
+	
+			const result = await courseService.getCourseByAdmin(1);
+			return res.status(200).json({ status: "OK", list: result });
+		
+	
+	} catch (err) {
+		return res.status(err.statusCode).json(err);
+	}
+});
 module.exports = router;
