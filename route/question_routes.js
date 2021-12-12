@@ -2,30 +2,36 @@ const router = require("express").Router();
 
 const auth = require("../middleware/auth");
 const QuestionService = require("../service/question_service");
+const Error = require("../model/error");
 
 const questionService = new QuestionService();
 
-router.get("/GetQuestionByID", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
 	try {
-		if (type !== 1 ||type !== 2) throw new Error("Unauthorized", 401);
+		//if (type !== 1 ||type !== 0) throw new Error("Unauthorized", 401);
+		const type = req.user.type;
 		const id = req.query.id;
+		if (type !== 1) throw new Error("Unauthorized", 401);
+		if (id != null) {
 		const question = await questionService.getQuestionByID(id);
 		return res.status(200).json({ status: "OK", question: question });
+		}
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.get("/GetQuestionIDByQuizID", auth, async (req, res) => {
+router.get("/QuizID", auth, async (req, res) => {
 	try {
-		if (type !== 1 ||type !== 2) throw new Error("Unauthorized", 401);
+		const type = req.user.type;
 		const quiz_id = req.query.quiz_id;
-		const question = await questionService.getQuestionIDByQuizID(quiz_id);
+		if (type !== 1 ) throw new Error("Unauthorized", 401);
+		const question = await questionService.getQuestionByQuizID(quiz_id);
 		return res.status(200).json({ status: "OK", question: question });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.put("/UpdateQuestion", auth, async (req, res) => {
+router.put("/", auth, async (req, res) => {
 	try {
 		const type = req.user.type;
 		if (type !== 1) throw new Error("Unauthorized", 401);
@@ -40,12 +46,12 @@ router.put("/UpdateQuestion", auth, async (req, res) => {
 	}
 });
 
-router.delete("/DeleteQuestion", auth, async (req, res) => {
+router.delete("/", auth, async (req, res) => {
 	try {
-		if (type !== 1 || type !==0) throw new Error("Unauthorized", 401);
 		const type = req.user.type;
 		const id = req.query.id;
-		const response = await courseService.deleteQuestionByID(id);
+		if (type !== 1 || type !==0) throw new Error("Unauthorized", 401);
+		const response = await questionService.deleteQuestionByID(id);
 		return res.status(200).json({
 			status: "OK",
 			message: response + " question deleted successfully",
@@ -54,7 +60,7 @@ router.delete("/DeleteQuestion", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.post("/CreateQuestion", auth, async (req, res) => {
+router.post("/", auth, async (req, res) => {
 	try {
 		const type = req.user.type;
 		if (type !== 1) throw new Error("Unauthorized", 401);

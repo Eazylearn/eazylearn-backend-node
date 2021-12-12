@@ -6,22 +6,20 @@ const questionRepository = new QuestionRepository();
 class QuestionService {
 	
     async getQuestionByID(ID) {
-		var result;
 		try {
-				result = await questionRepository.getQuestionID(
-					ID
-				);
-			
+				const result = await questionRepository.getQuestionByID(ID);
+				if (result == null) throw new Error("Not found", 404);
 			return result;
 		} catch (err) {
-			throw Error(err[0].message, 500);
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
 		}
 	}
-    async getQuestionIDByQuizID(quiz_id) {
-		var result;
+    async getQuestionByQuizID(quiz_id) {
+		
 
 		try {
-				result = await questionRepository.getQuestionIDByQuizID(
+			   const result = await questionRepository.getQuestionByQuizID(
 					quiz_id
 				);
 			
@@ -40,11 +38,10 @@ class QuestionService {
 		}
 	}
 	async createQuestion(question) {
-		if (type !== 1) throw new Error("Unauthorized", 401);
 		try {
 			const { id, content } = question;
 			if (id == null || content == null) throw new Error("Bad request", 400);
-			const result = await questionRepository.createQuestion(id, content);
+			const result = await questionRepository.createQuestionByID(id, content);
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
@@ -55,7 +52,7 @@ class QuestionService {
 		const { id, content } = question;
 		if (qid == null || id == null) throw new Error("Bad request", 400);
 		try {
-			const result = await courseRepository.updateQuestionByID(
+			const result = await questionRepository.updateQuestionByID(
 				qid,
 				id,
 				content
