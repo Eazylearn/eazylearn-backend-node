@@ -2,17 +2,20 @@ const Quiz = require("../model/quiz");
 const QuizQuestion = require("../model/quiz_question");
 
 class QuizRepository {
-	async getQuizIDByCourseID(courseID) {
+	async getQuizByCourseID(courseID) {
 		try {
 			const quizID = await QuizQuestion.findAll({
 				where: {
 					course_id:courseID,
 				},
+				include:{
+					model:Quiz
+				}
 				
 			});
 
 			const result = [];
-			quizID.forEach((c) => result.push(c.quizID));
+			quizID.forEach((c) => result.push(c.quiz));
 			return result;
 		} catch (err) {
 			console.log(err);
@@ -21,16 +24,13 @@ class QuizRepository {
 	}
     async getQuizByID(ID) {
 		try {
-			const quiz = await Quiz.findAll({
+			const quiz = await Quiz.findOne({
 				where: {
 					quiz_id: ID,
 				},
 				
 			});
-
-			const result = [];
-			quiz.forEach((c) => result.push(c.quiz));
-			return result;
+			return quiz;
 		} catch (err) {
 			console.log(err);
 			throw err;
@@ -50,13 +50,13 @@ class QuizRepository {
 		}
 	}
 	
-	async createQuizByID(id, name,timeLỉmit,courseID) {
+	async createQuiz(id, name,timeLỉmit,courseID) {
 		try {
 			const result = await Quiz.create({
 				quiz_id: id,
 			    quiz_name:name,
-                time_lỉmit:timeLỉmit,
-                course_id:courseID,
+                time_lỉmit: timeLỉmit,
+                course_id: courseID,
 			});
 			return result;
 		} catch (err) {
