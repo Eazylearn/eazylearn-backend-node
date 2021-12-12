@@ -17,10 +17,10 @@ class QuizService {
 			throw Error(err[0].message, 500);
 		}
 	}
-    async getQuizIDByCourseID(course_id) {
+    async getQuizByCourseID(course_id) {
 		var result;
 		try {
-				result = await quizRepository.getQuizIDByCourseID(
+				result = await quizRepository.getQuizByCourseID(
 					course_id
 				);
 			
@@ -38,16 +38,15 @@ class QuizService {
 		}
 	}
 	async createQuiz(quiz) {
-		if (type !== 1) throw new Error("Unauthorized", 401);
 		try {
-			const { id, name, time_limit, course_id } = quiz;
+			const { id, name, time_limit,course_id } = quiz;
 			if (id == null || name == null || time_limit == null || course_id == null)
 				throw new Error("Bad request", 400);
 			const result = await quizRepository.createQuiz(
 				id,
 				name,
 				time_limit,
-				course_id
+			    course_id
 			);
 			return result;
 		} catch (err) {
@@ -66,7 +65,7 @@ class QuizService {
 		)
 			throw new Error("Bad request", 400);
 		try {
-			const result = await courseRepository.updateQuizByID(
+			const result = await quizRepository.updateQuizByID(
 				qid,
 				id,
 				name,
