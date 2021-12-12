@@ -1,33 +1,34 @@
 const Question = require("../model/question");
 const QuizQuestion = require("../model/quiz_question");
 class QuestionRepository {
-	async getQuestionIDByQuizID(quizID) {
+	async getQuestionByQuizID(quizID) {
 		try {
 			const questionID = await QuizQuestion.findAll({
 				where: {
 					quiz_ID: quizID,
 				},
+				include:{
+					model: Question
+				}
 			});
 
 			const result = [];
-			questionID.forEach((c) => result.push(c.questionID));
+			questionID.forEach((c) => result.push(c.question));
 			return result;
 		} catch (err) {
 			console.log(err);
 			throw err;
 		}
 	}
-	async getQuestionByID(ID) {
+	async getQuestionByID(id) {
 		try {
-			const question = await Question.findAll({
+			const question = await Question.findOne({
 				where: {
-					question_id: ID,
+					question_id: id,
 				},
 			});
 
-			const result = [];
-			question.forEach((c) => result.push(c.question));
-			return result;
+			return question;
 		} catch (err) {
 			console.log(err);
 			throw err;
