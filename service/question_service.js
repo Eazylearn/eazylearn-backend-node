@@ -59,7 +59,6 @@ class QuestionService {
 			);
 			return result;
 		}catch (err) {
-			console.log(qid+id);
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;
 		}
