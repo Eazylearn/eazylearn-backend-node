@@ -1,4 +1,4 @@
-const Lecturer = require("../model/Lecturer");
+const Lecturer = require("../model/lecturer");
 const LecturerCourse = require("../model/lecturer_course");
 class LecturerRepository {
 	async getLecturerByCourseID(courseID) {
