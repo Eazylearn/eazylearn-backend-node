@@ -739,6 +739,13 @@ ALTER TABLE ONLY public.student_course
 
 -- Completed on 2021-11-17 15:39:09
 
+create table image(
+	image_id varchar primary key,
+	image_name varchar,
+	type varchar,
+	data bytea
+)
+
 --
 -- PostgreSQL database dump complete
 --
