@@ -206,7 +206,7 @@ class CourseRepository {
 			const result = [];
 			var data;
 			var i =0;
-			const course_per_page=1;
+			const course_per_page=10;
 			for( const c of course) 
 			 {
 				 if( i>= ((page-1)*course_per_page) && i<(page)*course_per_page)
