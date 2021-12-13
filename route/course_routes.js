@@ -48,7 +48,8 @@ router.get("/", auth, async (req, res) => {
 			return res.status(200).json({ status: "OK", course: result });
 		}
 		const semester = req.query.semester;
-		const courses = await courseService.getCourseBySemester(semester, req.user);
+		const page = req.query.page;
+		const courses = await courseService.getCourseBySemester(semester, req.user,page);
 		return res.status(200).json({ status: "OK", courses: courses });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
