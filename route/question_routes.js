@@ -23,9 +23,9 @@ router.get("/", auth, async (req, res) => {
 router.get("/QuizID", auth, async (req, res) => {
 	try {
 		const type = req.user.type;
-		const quiz_id = req.query.quiz_id;
+		const quizID = req.query.quizID;
 		if (type !== 1 ) throw new Error("Unauthorized", 401);
-		const question = await questionService.getQuestionByQuizID(quiz_id);
+		const question = await questionService.getQuestionByQuizID(quizID);
 		return res.status(200).json({ status: "OK", question: question });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
@@ -66,6 +66,26 @@ router.post("/", auth, async (req, res) => {
 		if (type !== 1) throw new Error("Unauthorized", 401);
 
 		const result = await questionService.createQuestion(req.body);
+		return res.status(200).json({ status: "OK", message: result });
+	} catch (err) {
+		return res.status(err.statusCode).json(err);
+	}
+});
+router.post("/assign", auth, async (req, res) => {
+	try {
+		const type = req.user.type;
+		if (type !== 1) throw new Error("Unauthorized", 401);
+		const result = await questionService.assignQuestionToQuiz(req.body);
+		return res.status(200).json({ status: "OK", message: result });
+	} catch (err) {
+		return res.status(err.statusCode).json(err);
+	}
+});
+router.post("/remove", auth, async (req, res) => {
+	try {
+		const type = req.user.type;
+		if (type !== 1) throw new Error("Unauthorized", 401);
+		const result = await questionService.removeQuestionToQuiz(req.body);
 		return res.status(200).json({ status: "OK", message: result });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
