@@ -3,7 +3,6 @@ const StudentCourse = require("../model/student_course");
 const LecturerCourse = require("../model/lecturer_course");
 const Lecturer = require("../model/lecturer");
 const Student = require("../model/student");
-const Error = require("../model/error");
 
 
 class CourseRepository {
