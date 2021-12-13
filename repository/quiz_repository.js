@@ -69,7 +69,7 @@ class QuizRepository {
 				{
 					quiz_id: id,
                     quiz_name:name,
-                    time_lỉmit:timeLimit,
+                    time_limit:timeLimit,
                     course_id:courseID,
 				},
 				{
