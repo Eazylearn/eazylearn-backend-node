@@ -4,6 +4,8 @@ const LecturerCourse = require("../model/lecturer_course");
 const Lecturer = require("../model/lecturer");
 const Student = require("../model/student");
 
+
+
 class CourseRepository {
 	async createCourse(id, name, academicYear, semester) {
 		try {
