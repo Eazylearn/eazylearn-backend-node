@@ -50,7 +50,7 @@ class QuestionService {
 	}
 	async updateQuestionByID(qid, question) {
 		const { id, content } = question;
-		if (qid == null || id == null) throw new Error("Bad request", 400);
+		if (qid == null || id == null) throw new Error("Bad request" +qid+id, 400);
 		try {
 			const result = await questionRepository.updateQuestionByID(
 				qid,
@@ -58,9 +58,9 @@ class QuestionService {
 				content
 			);
 			return result;
-		} catch (err) {
+		}catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 }

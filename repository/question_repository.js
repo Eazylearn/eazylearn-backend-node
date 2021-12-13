@@ -62,7 +62,7 @@ class QuestionRepository {
 	async updateQuestionByID(qid, id, Content){
 
 		try {
-			const result = await Course.update(
+			const result = await Question.update(
 				{
 					question_id: id,
 					question_content: Content,

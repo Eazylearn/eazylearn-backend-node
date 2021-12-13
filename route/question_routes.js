@@ -36,9 +36,9 @@ router.put("/", auth, async (req, res) => {
 		const type = req.user.type;
 		if (type !== 1) throw new Error("Unauthorized", 401);
 
-		const id = req.query.id;
-		if (id == null) throw new Error("Bad request", 401);
-		const result = await questionService.updateQuestionByID(id, req.body);
+		const qid = req.query.qid;
+		if (qid == null) throw new Error("Bad request", 401);
+		const result = await questionService.updateQuestionByID(qid, req.body);
 		return res.status(200).json({ status: "OK", message: result });
 	} catch (err) {
 		console.log(err.statusCode);
