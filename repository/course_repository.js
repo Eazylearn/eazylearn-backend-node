@@ -4,7 +4,6 @@ const LecturerCourse = require("../model/lecturer_course");
 const Lecturer = require("../model/lecturer");
 const Student = require("../model/student");
 
-
 class CourseRepository {
 	async createCourse(id, name, academicYear, semester) {
 		try {
@@ -152,18 +151,18 @@ class CourseRepository {
 			throw err;
 		}
 	}
-	
+
 	async getLecturerByCourseID(courseID) {
 		try {
 			const lecturerID = await LecturerCourse.findAll({
 				where: {
 					course_id: courseID,
 				},
-				include:{
-					model: Lecturer
-				}
+				include: {
+					model: Lecturer,
+				},
 			});
-			
+
 			const result = [];
 			lecturerID.forEach((c) => result.push(c.lecturer));
 			return result;
@@ -230,12 +229,11 @@ class CourseRepository {
 			// test.forEach((c)=>result.push(c))
             
 			return result;
-			
 		} catch (err) {
+			console.log(err);
 			throw err;
 		}
 	}
 }
-
 
 module.exports = CourseRepository;
