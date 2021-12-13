@@ -15,12 +15,12 @@ class QuestionService {
 			throw err;
 		}
 	}
-    async getQuestionByQuizID(quiz_id) {
+    async getQuestionByQuizID(quizID) {
 		
 
 		try {
 			   const result = await questionRepository.getQuestionByQuizID(
-					quiz_id
+				quizID
 				);
 			
 
@@ -59,6 +59,38 @@ class QuestionService {
 			);
 			return result;
 		}catch (err) {
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
+		}
+	}
+	async assignQuestionToQuiz(body) {
+		const { questionID, quizID } = body;
+		if (questionID == null || quizID == null)
+			throw new Error("Bad request", 400);
+		try {
+			const result = await questionRepository.assignQuestionToQuiz(
+				questionID,
+				quizID
+			);
+			return result;
+		} catch (err) {
+			console.log(err);
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
+		}
+	}
+	async removeQuestionToQuiz(body) {
+		const { questionID, quizID } = body;
+		if (questionID == null || quizID == null)
+			throw new Error("Bad request", 400);
+		try {
+			const result = await questionRepository.removeQuestionToQuiz(
+				questionID,
+				quizID
+			);
+			return result;
+		} catch (err) {
+			console.log(err);
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;
 		}
