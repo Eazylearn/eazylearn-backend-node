@@ -3,7 +3,7 @@ const StudentCourse = require("../model/student_course");
 const LecturerCourse = require("../model/lecturer_course");
 const Lecturer = require("../model/lecturer");
 const Student = require("../model/student");
-//const { INTEGER } = require("sequelize/types");
+const Error = require("../model/error");
 
 
 class CourseRepository {
@@ -172,43 +172,64 @@ class CourseRepository {
 			console.log(err);
 			throw err;
 		}
-	}
-	async getCourseByAdmin(Page) {
+	}async getStudentByCourseID(courseID) {
 		try {
-			const course = await Course.findAll({
-				
-			});
-			const test = await LecturerCourse.findAll({
-				include:[{
-					model:Course
-					
+			const studentID = await StudentCourse.findAll({
+				where: {
+					course_id: courseID,
 				},
-				{
-					model:Lecturer
-				}]
+				include:{
+					model: Student
+				}
 			});
+			
 			const result = [];
-			
-			// course.forEach((c) => {  
-				
-			   
-		 	//   // const lec =  getLecturerByCourseID(c.course_id);
-				
-				
-			
-			// 	var data ={
-			// 	course_id: c.course_id,
-			// 	course_name: c.course_name,
-			// 	academic_year: c.academic_year,
-			// 	semester:c.semester,
-				
-			// 	//lecuter: lec,
-			// 	//student:{Student}
-			// }
-			 	//result.push(data)});
-			//course.forEach((c)=>result.push(c))
-			test.forEach((c)=>result.push(c))
+			studentID.forEach((c) => result.push(c.student));
+			return result;
+		} catch (err) {
+			console.log(err);
+			throw err;
+		}
+	}
+	async getCourseByAdmin(page) {
+		try {
+			const course = await Course.findAll({});
+			// const test = await LecturerCourse.findAll({
+			// 	include:[{
+			// 		model:Course
+					
+			// 	},
+			// 	{
+			// 		model:Lecturer
+			// 	}]
+			 //});
+			const result = [];
+			var data;
+			var i =0;
+			const course_per_page=1;
+			for( const c of course) 
+			 {
+				 if( i>= ((page-1)*course_per_page) && i<(page)*course_per_page)
+				{  
 
+		 	   const lec =  await this.getLecturerByCourseID(c.course_id);
+				const stu = await this.getStudentByCourseID(c.course_id)
+				data ={
+				course_id: c.course_id,
+				course_name: c.course_name,
+				academic_year: c.academic_year,
+				semester:c.semester,
+				
+				lectuter: lec,
+				student:stu
+				}
+			 	result.push(data)
+			}
+			    i++;
+			};
+			//course.forEach((c)=>result.push(c))
+			// test.forEach((c)=>result.push(c))
+            
 			return result;
 			
 		} catch (err) {

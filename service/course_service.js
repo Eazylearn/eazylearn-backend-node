@@ -73,7 +73,7 @@ class CourseService {
 		}
 	}
 
-	async getCourseBySemester(sem, user) {
+	async getCourseBySemester(sem, user,page) {
 		try {
 			var result;
 			if (user.type === 2)
@@ -83,7 +83,8 @@ class CourseService {
 				);
 			else if (user.type === 1)
 				result = await courseRepository.getCourseByLecturerID(user.account_id);
-
+            else if (user.type==0)
+			    result = await courseRepository.getCourseByAdmin(page)
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
@@ -172,19 +173,7 @@ class CourseService {
 			throw Error(err[0].message, 500);
 		}
 	}
-	async getCourseByAdmin(Page) {
-        
-		try {
-			   
-				const result = await courseRepository.getCourseByAdmin(
-					Page
-				);
-			
-			return result;
-		} catch (err) {
-			throw Error(err[0].message, 500);
-		}
-	}
+	
 }
 
 module.exports = CourseService;
