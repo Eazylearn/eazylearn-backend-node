@@ -235,9 +235,10 @@ class CourseRepository {
 				}
 				i++;
 			}
+			const maxPage= Math.floor(i/course_per_page) + !!(~(i%course_per_page) +1);
+			result.push({maxPage})
 			//course.forEach((c)=>result.push(c))
 			// test.forEach((c)=>result.push(c))
-
 			return result;
 		} catch (err) {
 			console.log(err);
