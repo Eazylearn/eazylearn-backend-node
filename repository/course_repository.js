@@ -211,17 +211,17 @@ class CourseRepository {
 			throw err;
 		}
 	}
-	async getCourseByAdmin(page ,sem) {
+	async getCourseByAdmin(page, sem) {
 		try {
 			const course = await Course.findAll({
-				where: sem == null ? null : { semester: sem }
+				where: sem == null ? null : { semester: sem },
 			});
-			
+
 			const result = [];
 			var data;
 			var i = 0;
 			const course_per_page = 10;
-			for (const c of course) {
+			for (var c of course) {
 				if (i >= (page - 1) * course_per_page && i < page * course_per_page) {
 					const lec = await this.getLecturerByCourseID(c.course_id);
 					const stu = await this.getStudentByCourseID(c.course_id);
@@ -238,11 +238,12 @@ class CourseRepository {
 				}
 				i++;
 			}
-			const maxPage= Math.floor(i/course_per_page) + !!(~(i%course_per_page) +1);
-			result.push({maxPage})
+			const maxPage = Math.ceil(i / course_per_page);
+			//result.push({maxPage})
 			//course.forEach((c)=>result.push(c))
 			// test.forEach((c)=>result.push(c))
-			return result;
+
+			return { courses: result, maxPage: maxPage };
 		} catch (err) {
 			console.log(err);
 			throw err;

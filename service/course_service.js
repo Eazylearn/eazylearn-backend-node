@@ -87,8 +87,9 @@ class CourseService {
 				);
 			else if (user.type === 1)
 				result = await courseRepository.getCourseByLecturerID(user.account_id);
-			else if (user.type === 0)
-				result = await courseRepository.getCourseByAdmin(page ,sem);
+			else if (user.type === 0) {
+				result = await courseRepository.getCourseByAdmin(page, sem);
+			}
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
