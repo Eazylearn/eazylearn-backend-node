@@ -7,9 +7,9 @@ class LecturerRepository {
 				where: {
 					course_id: courseID,
 				},
-				include:{
-					model: Lecturer
-				}
+				include: {
+					model: Lecturer,
+				},
 			});
 
 			const result = [];
