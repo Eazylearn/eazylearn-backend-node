@@ -49,12 +49,22 @@ router.get("/", auth, async (req, res) => {
 		}
 		const semester = req.query.semester;
 		const page = req.query.page;
-		if(req.user==0)
-		{ 
-			const {courses, maxPage} = await courseService.getCourseBySemester(semester, req.user,page);
-			return res.status(200).json({ status: "OK", courses: courses, maxPage:maxPage });
+
+		if (req.user.type === 0) {
+			const { courses, maxPage } = await courseService.getCourseBySemester(
+				semester,
+				req.user,
+				page
+			);
+			return res
+				.status(200)
+				.json({ status: "OK", courses: courses, maxPage: maxPage });
 		}
-		const courses = await courseService.getCourseBySemester(semester, req.user,page);
+		const courses = await courseService.getCourseBySemester(
+			semester,
+			req.user,
+			page
+		);
 		return res.status(200).json({ status: "OK", courses: courses });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
@@ -67,7 +77,6 @@ router.get("/lecturer", auth, async (req, res) => {
 			const result = await courseService.getLecturerByCourseID(courseID);
 			return res.status(200).json({ status: "OK", lecturer: result });
 		}
-	
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
@@ -125,16 +134,11 @@ router.delete("/remove/lecturer", auth, async (req, res) => {
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
-	
 });
 router.get("/admin", auth, async (req, res) => {
 	try {
-		
-	
-			const result = await courseService.getCourseByAdmin(1);
-			return res.status(200).json({ status: "OK", list: result });
-		
-	
+		const result = await courseService.getCourseByAdmin(1);
+		return res.status(200).json({ status: "OK", list: result });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
