@@ -15,7 +15,10 @@ class CourseService {
 				semester < 0 ||
 				semester > 3
 			)
-				throw new Error("Bad request"+id+name+academicYear+semester, 400);
+				throw new Error(
+					"Bad request" + id + name + academicYear + semester,
+					400
+				);
 			const result = await courseRepository.createCourse(
 				id,
 				name,
@@ -68,12 +71,13 @@ class CourseService {
 			if (result == null) throw new Error("Not found", 404);
 			return result;
 		} catch (err) {
+			console.log(err);
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;
 		}
 	}
 
-	async getCourseBySemester(sem, user,page) {
+	async getCourseBySemester(sem, user, page) {
 		try {
 			var result;
 			if (user.type === 2)
@@ -83,8 +87,8 @@ class CourseService {
 				);
 			else if (user.type === 1)
 				result = await courseRepository.getCourseByLecturerID(user.account_id);
-            else if (user.type==0)
-			    result = await courseRepository.getCourseByAdmin(page)
+			else if (user.type === 0)
+				result = await courseRepository.getCourseByAdmin(page);
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
@@ -161,19 +165,14 @@ class CourseService {
 		}
 	}
 	async getLecturerByCourseID(course_id) {
-        
 		try {
-			   
-				const result = await courseRepository.getLecturerByCourseID(
-					course_id
-				);
-			
+			const result = await courseRepository.getLecturerByCourseID(course_id);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
 	}
-	
 }
 
 module.exports = CourseService;
