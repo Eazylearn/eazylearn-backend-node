@@ -4,8 +4,6 @@ const LecturerCourse = require("../model/lecturer_course");
 const Lecturer = require("../model/lecturer");
 const Student = require("../model/student");
 
-
-
 class CourseRepository {
 	async createCourse(id, name, academicYear, semester) {
 		try {
@@ -47,12 +45,18 @@ class CourseRepository {
 
 	async getCourseByID(courseID) {
 		try {
-			const course = await Course.findOne({
+			const c = await Course.findOne({
 				where: {
 					course_id: courseID,
 				},
 			});
-			return course;
+			if (c != null) {
+				const students = await this.getStudentByCourseID(courseID);
+				const lecturers = await this.getLecturerByCourseID(courseID);
+				c.dataValues.students = students;
+				c.dataValues.lecturers = lecturers;
+			}
+			return c;
 		} catch (err) {
 			throw err;
 		}
@@ -88,9 +92,24 @@ class CourseRepository {
 			});
 
 			const result = [];
-			courses.forEach((c) => result.push(c.course));
+			for (var c of courses) {
+				c = c.course;
+				const lec = await this.getLecturerByCourseID(c.course_id);
+				const stu = await this.getStudentByCourseID(c.course_id);
+				const data = {
+					course_id: c.course_id,
+					course_name: c.course_name,
+					academic_year: c.academic_year,
+					semester: c.semester,
+
+					lecturers: lec,
+					students: stu,
+				};
+				result.push(data);
+			}
 			return result;
 		} catch (err) {
+			console.log(err);
 			throw err;
 		}
 	}
@@ -172,17 +191,18 @@ class CourseRepository {
 			console.log(err);
 			throw err;
 		}
-	}async getStudentByCourseID(courseID) {
+	}
+	async getStudentByCourseID(courseID) {
 		try {
 			const studentID = await StudentCourse.findAll({
 				where: {
 					course_id: courseID,
 				},
-				include:{
-					model: Student
-				}
+				include: {
+					model: Student,
+				},
 			});
-			
+
 			const result = [];
 			studentID.forEach((c) => result.push(c.student));
 			return result;
@@ -194,42 +214,29 @@ class CourseRepository {
 	async getCourseByAdmin(page) {
 		try {
 			const course = await Course.findAll({});
-			// const test = await LecturerCourse.findAll({
-			// 	include:[{
-			// 		model:Course
-					
-			// 	},
-			// 	{
-			// 		model:Lecturer
-			// 	}]
-			 //});
 			const result = [];
 			var data;
-			var i =0;
-			const course_per_page=10;
-			for( const c of course) 
-			 {
-				 if( i>= ((page-1)*course_per_page) && i<(page)*course_per_page)
-				{  
+			var i = 0;
+			const course_per_page = 10;
+			for (const c of course) {
+				if (i >= (page - 1) * course_per_page && i < page * course_per_page) {
+					const lec = await this.getLecturerByCourseID(c.course_id);
+					const stu = await this.getStudentByCourseID(c.course_id);
+					data = {
+						course_id: c.course_id,
+						course_name: c.course_name,
+						academic_year: c.academic_year,
+						semester: c.semester,
 
-		 	   const lec =  await this.getLecturerByCourseID(c.course_id);
-				const stu = await this.getStudentByCourseID(c.course_id)
-				data ={
-				course_id: c.course_id,
-				course_name: c.course_name,
-				academic_year: c.academic_year,
-				semester:c.semester,
-				
-				lectuter: lec,
-				student:stu
+						lecturers: lec,
+						students: stu,
+					};
+					result.push(data);
 				}
-			 	result.push(data)
+				i++;
 			}
-			    i++;
-			};
 			//course.forEach((c)=>result.push(c))
 			// test.forEach((c)=>result.push(c))
-            
 
 			return result;
 		} catch (err) {

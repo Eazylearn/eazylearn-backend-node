@@ -1,4 +1,4 @@
-const Lecturer = require("../model/Lecturer");
+const Lecturer = require("../model/lecturer");
 const LecturerCourse = require("../model/lecturer_course");
 class LecturerRepository {
 	async getLecturerByCourseID(courseID) {
@@ -7,9 +7,9 @@ class LecturerRepository {
 				where: {
 					course_id: courseID,
 				},
-				include:{
-					model: Lecturer
-				}
+				include: {
+					model: Lecturer,
+				},
 			});
 
 			const result = [];
