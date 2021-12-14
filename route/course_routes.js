@@ -49,6 +49,11 @@ router.get("/", auth, async (req, res) => {
 		}
 		const semester = req.query.semester;
 		const page = req.query.page;
+		if(req.user==0)
+		{ 
+			const {courses, maxPage} = await courseService.getCourseBySemester(semester, req.user,page);
+			return res.status(200).json({ status: "OK", courses: courses, maxPage:maxPage });
+		}
 		const courses = await courseService.getCourseBySemester(semester, req.user,page);
 		return res.status(200).json({ status: "OK", courses: courses });
 	} catch (err) {

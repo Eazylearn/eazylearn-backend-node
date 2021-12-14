@@ -238,11 +238,11 @@ class CourseRepository {
 				}
 				i++;
 			}
-			const maxPage= Math.floor(i/course_per_page) + !!(~(i%course_per_page) +1);
-			result.push({maxPage})
+			const maxPage= Math.ceil(i/course_per_page) ;
+			//result.push({maxPage})
 			//course.forEach((c)=>result.push(c))
 			// test.forEach((c)=>result.push(c))
-			return result;
+			return {result:result , maxPage:maxPage};
 		} catch (err) {
 			console.log(err);
 			throw err;
