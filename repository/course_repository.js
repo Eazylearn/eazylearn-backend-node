@@ -213,7 +213,6 @@ class CourseRepository {
 	}
 	async getCourseByAdmin(page ,sem) {
 		try {
-			console.log(sem);
 			const course = await Course.findAll({
 				where: sem == null ? null : { semester: sem }
 			});
