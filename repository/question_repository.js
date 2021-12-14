@@ -5,13 +5,12 @@ class QuestionRepository {
 		try {
 			const questionID = await QuizQuestion.findAll({
 				where: {
-					quiz_ID: quizID,
+					quiz_id: quizID,
 				},
 				include:{
 					model: Question
 				}
 			});
-
 			const result = [];
 			questionID.forEach((c) => result.push(c.question));
 			return result;
@@ -62,7 +61,7 @@ class QuestionRepository {
 	async updateQuestionByID(qid, id, Content){
 
 		try {
-			const result = await Course.update(
+			const result = await Question.update(
 				{
 					question_id: id,
 					question_content: Content,
@@ -74,6 +73,29 @@ class QuestionRepository {
 				}
 			);
 			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
+	async assignQuestionToQuiz(questionID, quizID) {
+		try {
+			const result = await QuizQuestion.create({
+				question_id: questionID,
+				quiz_id: quizID,
+			});
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
+	async removeQuestionToQuiz(questionID, quizID) {
+		try {
+			return await QuizQuestion.destroy({
+				where: {
+					question_id: questionID,
+					quiz_id: quizID,
+				},
+			});
 		} catch (err) {
 			throw err;
 		}
