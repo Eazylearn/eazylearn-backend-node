@@ -1,4 +1,4 @@
-const Student = require("../model/Student");
+const Student = require("../model/student");
 const StudentCourse = require("../model/student_course");
 class StudentRepository {
 	async getStudentByCourseID(courseID) {
