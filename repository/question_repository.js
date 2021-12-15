@@ -7,9 +7,9 @@ class QuestionRepository {
 				where: {
 					quiz_id: quizID,
 				},
-				include:{
-					model: Question
-				}
+				include: {
+					model: Question,
+				},
 			});
 			const result = [];
 			questionID.forEach((c) => result.push(c.question));
@@ -58,8 +58,7 @@ class QuestionRepository {
 			throw err;
 		}
 	}
-	async updateQuestionByID(qid, id, Content){
-
+	async updateQuestionByID(qid, id, Content) {
 		try {
 			const result = await Question.update(
 				{
@@ -102,4 +101,4 @@ class QuestionRepository {
 	}
 }
 
-module.exports = QuestionRepository;
+module.exports = new QuestionRepository();

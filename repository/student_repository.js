@@ -1,16 +1,19 @@
-const Lecturer = require("../model/Student");
+const Student = require("../model/Student");
 const StudentCourse = require("../model/student_course");
 class StudentRepository {
-	async getStudentIDByCourseID(courseID) {
+	async getStudentByCourseID(courseID) {
 		try {
 			const studentID = await StudentCourse.findAll({
 				where: {
-					course_ID: courseID,
+					course_id: courseID,
+				},
+				include: {
+					model: Student,
 				},
 			});
 
 			const result = [];
-			studentID.forEach((c) => result.push(c.studentID));
+			studentID.forEach((c) => result.push(c.student));
 			return result;
 		} catch (err) {
 			console.log(err);
@@ -52,9 +55,8 @@ class StudentRepository {
 			const result = await Student.create({
 				student_id: id,
 				studentn_name: name,
-                class_id: classID,
+				class_id: classID,
 				account_id: accountID,
-                
 			});
 			return result;
 		} catch (err) {
@@ -67,7 +69,7 @@ class StudentRepository {
 				{
 					student_id: id,
 					studentn_name: name,
-                    class_id : classID,
+					class_id: classID,
 					account_id: accountID,
 				},
 				{
@@ -83,4 +85,4 @@ class StudentRepository {
 	}
 }
 
-module.exports = StudentRepository;
+module.exports = new StudentRepository();

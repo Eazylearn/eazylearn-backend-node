@@ -1,31 +1,23 @@
 const QuestionRepository = require("../repository/lecturer_repository");
 const Error = require("../model/error");
-const LecturerRepository = require("../repository/lecturer_repository");
-const lecturerRepository = new LecturerRepository();
+const lecturerRepository = require("../repository/lecturer_repository");
 
 class LecturerService {
-	
-    async getLecturerByID(ID) {
-        var result;
+	async getLecturerByID(ID) {
+		var result;
 		try {
-			
-				result = await lecturerRepository.getLecturerByID(
-					ID
-				);
-			
+			result = await lecturerRepository.getLecturerByID(ID);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
 	}
-    async getLecturerByCourseID(quiz_id) {
-        var result;
+	async getLecturerByCourseID(quiz_id) {
+		var result;
 		try {
-			
-				result = await lecturerRepository.getLecturerByCourseID(
-					course_id
-				);
-			
+			result = await lecturerRepository.getLecturerByCourseID(course_id);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);

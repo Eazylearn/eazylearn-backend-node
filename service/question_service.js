@@ -1,28 +1,20 @@
-const QuestionRepository = require("../repository/question_repository");
+const questionRepository = require("../repository/question_repository");
 const Error = require("../model/error");
 
-const questionRepository = new QuestionRepository();
-
 class QuestionService {
-	
-    async getQuestionByID(ID) {
+	async getQuestionByID(ID) {
 		try {
-				const result = await questionRepository.getQuestionByID(ID);
-				if (result == null) throw new Error("Not found", 404);
+			const result = await questionRepository.getQuestionByID(ID);
+			if (result == null) throw new Error("Not found", 404);
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;
 		}
 	}
-    async getQuestionByQuizID(quizID) {
-		
-
+	async getQuestionByQuizID(quizID) {
 		try {
-			   const result = await questionRepository.getQuestionByQuizID(
-				quizID
-				);
-			
+			const result = await questionRepository.getQuestionByQuizID(quizID);
 
 			return result;
 		} catch (err) {
@@ -50,7 +42,8 @@ class QuestionService {
 	}
 	async updateQuestionByID(qid, question) {
 		const { id, content } = question;
-		if (qid == null || id == null) throw new Error("Bad request" +qid+id, 400);
+		if (qid == null || id == null)
+			throw new Error("Bad request" + qid + id, 400);
 		try {
 			const result = await questionRepository.updateQuestionByID(
 				qid,
@@ -58,7 +51,7 @@ class QuestionService {
 				content
 			);
 			return result;
-		}catch (err) {
+		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;
 		}

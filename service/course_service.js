@@ -1,7 +1,5 @@
-const CourseRepository = require("../repository/course_repository");
+const courseRepository = require("../repository/course_repository");
 const Error = require("../model/error");
-
-const courseRepository = new CourseRepository();
 
 class CourseService {
 	async createCourse(course) {

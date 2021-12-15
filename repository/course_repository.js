@@ -1,8 +1,8 @@
 const Course = require("../model/course");
 const StudentCourse = require("../model/student_course");
 const LecturerCourse = require("../model/lecturer_course");
-const Lecturer = require("../model/lecturer");
-const Student = require("../model/student");
+const studentRepository = require("./student_repository");
+const lecturerRepository = require("./lecturer_repository");
 
 class CourseRepository {
 	async createCourse(id, name, academicYear, semester) {
@@ -51,8 +51,10 @@ class CourseRepository {
 				},
 			});
 			if (c != null) {
-				const students = await this.getStudentByCourseID(courseID);
-				const lecturers = await this.getLecturerByCourseID(courseID);
+				const students = await studentRepository.getStudentByCourseID(courseID);
+				const lecturers = await lecturerRepository.getLecturerByCourseID(
+					courseID
+				);
 				c.dataValues.students = students;
 				c.dataValues.lecturers = lecturers;
 			}
@@ -94,8 +96,8 @@ class CourseRepository {
 			const result = [];
 			for (var c of courses) {
 				c = c.course;
-				const lec = await this.getLecturerByCourseID(c.course_id);
-				const stu = await this.getStudentByCourseID(c.course_id);
+				const lec = await lecturerRepository.getLecturerByCourseID(c.course_id);
+				const stu = await studentRepository.getStudentByCourseID(c.course_id);
 				const data = {
 					course_id: c.course_id,
 					course_name: c.course_name,
@@ -172,45 +174,6 @@ class CourseRepository {
 			throw err;
 		}
 	}
-
-	async getLecturerByCourseID(courseID) {
-		try {
-			const lecturerID = await LecturerCourse.findAll({
-				where: {
-					course_id: courseID,
-				},
-				include: {
-					model: Lecturer,
-				},
-			});
-
-			const result = [];
-			lecturerID.forEach((c) => result.push(c.lecturer));
-			return result;
-		} catch (err) {
-			console.log(err);
-			throw err;
-		}
-	}
-	async getStudentByCourseID(courseID) {
-		try {
-			const studentID = await StudentCourse.findAll({
-				where: {
-					course_id: courseID,
-				},
-				include: {
-					model: Student,
-				},
-			});
-
-			const result = [];
-			studentID.forEach((c) => result.push(c.student));
-			return result;
-		} catch (err) {
-			console.log(err);
-			throw err;
-		}
-	}
 	async getCourseByAdmin(page, sem) {
 		try {
 			const course = await Course.findAll({
@@ -223,8 +186,10 @@ class CourseRepository {
 			const course_per_page = 10;
 			for (var c of course) {
 				if (i >= (page - 1) * course_per_page && i < page * course_per_page) {
-					const lec = await this.getLecturerByCourseID(c.course_id);
-					const stu = await this.getStudentByCourseID(c.course_id);
+					const lec = await lecturerRepository.getLecturerByCourseID(
+						c.course_id
+					);
+					const stu = await studentRepository.getStudentByCourseID(c.course_id);
 					data = {
 						course_id: c.course_id,
 						course_name: c.course_name,
@@ -251,4 +216,4 @@ class CourseRepository {
 	}
 }
 
-module.exports = CourseRepository;
+module.exports = new CourseRepository();
