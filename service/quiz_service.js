@@ -1,29 +1,22 @@
-const QuizRepository = require("../repository/quiz_repository");
+const quizRepository = require("../repository/quiz_repository");
 const Error = require("../model/error");
 
-const quizRepository = new QuizRepository();
-
 class QuizService {
-	
-    async getQuizByID(ID) {
+	async getQuizByID(ID) {
 		var result;
 		try {
-				result = await quizRepository.getQuizByID(
-					ID
-				);
-			
+			result = await quizRepository.getQuizByID(ID);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
 		}
 	}
-    async getQuizByCourseID(course_id) {
+	async getQuizByCourseID(course_id) {
 		var result;
 		try {
-				result = await quizRepository.getQuizByCourseID(
-					course_id
-				);
-			
+			result = await quizRepository.getQuizByCourseID(course_id);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
@@ -39,14 +32,14 @@ class QuizService {
 	}
 	async createQuiz(quiz) {
 		try {
-			const { id, name, time_limit,course_id } = quiz;
+			const { id, name, time_limit, course_id } = quiz;
 			if (id == null || name == null || time_limit == null || course_id == null)
 				throw new Error("Bad request", 400);
 			const result = await quizRepository.createQuiz(
 				id,
 				name,
 				time_limit,
-			    course_id
+				course_id
 			);
 			return result;
 		} catch (err) {

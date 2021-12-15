@@ -5,6 +5,7 @@ const CourseService = require("../service/course_service");
 const LecturerService = require("../service/lecturer_service");
 
 const Error = require("../model/error");
+const { json } = require("express/lib/response");
 const courseService = new CourseService();
 
 router.post("/", auth, async (req, res) => {
@@ -135,12 +136,26 @@ router.delete("/remove/lecturer", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
-router.get("/admin", auth, async (req, res) => {
+// router.get("/admin", auth, async (req, res) => {
+// 	try {
+// 		const result = await courseService.getCourseByAdmin(1);
+// 		return res.status(200).json({ status: "OK", list: result });
+// 	} catch (err) {
+// 		return res.status(err.statusCode).json(err);
+// 	}
+// });
+
+router.get("/search", async (req, res) => {
 	try {
-		const result = await courseService.getCourseByAdmin(1);
-		return res.status(200).json({ status: "OK", list: result });
+		const query = req.query.query;
+		const page = req.query.page;
+		const { result, maxPage } = await courseService.search(query, page);
+		return res
+			.status(200)
+			.json({ status: "Ok", courses: result, maxPage: maxPage });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
 });
+
 module.exports = router;

@@ -1,7 +1,5 @@
 const Error = require("../model/error");
-const ImageRepository = require("../repository/upload_repository");
-
-const imageRepository = new ImageRepository();
+const imageRepository = require("../repository/upload_repository");
 
 class UploadService {
 	async save(image) {

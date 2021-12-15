@@ -6,12 +6,11 @@ class QuizRepository {
 		try {
 			const quizID = await QuizQuestion.findAll({
 				where: {
-					course_id:courseID,
+					course_id: courseID,
 				},
-				include:{
-					model:Quiz
-				}
-				
+				include: {
+					model: Quiz,
+				},
 			});
 
 			const result = [];
@@ -22,13 +21,12 @@ class QuizRepository {
 			throw err;
 		}
 	}
-    async getQuizByID(ID) {
+	async getQuizByID(ID) {
 		try {
 			const quiz = await Quiz.findOne({
 				where: {
 					quiz_id: ID,
 				},
-				
 			});
 			return quiz;
 		} catch (err) {
@@ -36,7 +34,7 @@ class QuizRepository {
 			throw err;
 		}
 	}
-    async deleteQuizByID(id) {
+	async deleteQuizByID(id) {
 		try {
 			const result = await Quiz.destroy({
 				where: {
@@ -44,33 +42,33 @@ class QuizRepository {
 				},
 			});
 			return result;
-		}  catch (err) {
+		} catch (err) {
 			console.log(err);
 			throw err;
 		}
 	}
-	
-	async createQuiz(id, name,timeLỉmit,courseID) {
+
+	async createQuiz(id, name, timeLỉmit, courseID) {
 		try {
 			const result = await Quiz.create({
 				quiz_id: id,
-			    quiz_name:name,
-                time_lỉmit: timeLỉmit,
-                course_id: courseID,
+				quiz_name: name,
+				time_lỉmit: timeLỉmit,
+				course_id: courseID,
 			});
 			return result;
 		} catch (err) {
 			throw err;
 		}
 	}
-	async updateQuizByID(id, name, timeLimit, courseID){
+	async updateQuizByID(id, name, timeLimit, courseID) {
 		try {
 			const result = await Course.update(
 				{
 					quiz_id: id,
-                    quiz_name:name,
-                    time_limit:timeLimit,
-                    course_id:courseID,
+					quiz_name: name,
+					time_limit: timeLimit,
+					course_id: courseID,
 				},
 				{
 					where: {
@@ -82,7 +80,7 @@ class QuizRepository {
 		} catch (err) {
 			throw err;
 		}
-	}	
+	}
 }
 
-module.exports = QuizRepository;
+module.exports = new QuizRepository();

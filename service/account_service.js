@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
-const AccountRepository = require("../repository/account_repository");
+const accountRepository = require("../repository/account_repository");
 const Error = require("../model/error");
-
-const accountRepository = new AccountRepository();
 
 function generateToken(account_id, type) {
 	return jwt.sign(

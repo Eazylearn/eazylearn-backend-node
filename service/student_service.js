@@ -1,7 +1,6 @@
 const QuestionRepository = require("../repository/student_repository");
 const Error = require("../model/error");
-const StudentRepository = require("../repository/student_repository");
-const studentRepository = new StudentRepository();
+const studentRepository = require("../repository/student_repository");
 
 class StudentService {
 	async getStudentByID(ID) {

@@ -57,4 +57,4 @@ class AccountRepository {
 	}
 }
 
-module.exports = AccountRepository;
+module.exports = new AccountRepository();

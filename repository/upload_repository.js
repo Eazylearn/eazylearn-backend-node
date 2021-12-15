@@ -30,4 +30,4 @@ class UploadRepository {
 	}
 }
 
-module.exports = UploadRepository;
+module.exports = new UploadRepository();

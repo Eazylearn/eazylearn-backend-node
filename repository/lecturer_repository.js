@@ -13,7 +13,7 @@ class LecturerRepository {
 			});
 
 			const result = [];
-			lecturerID.forEach((c) => result.push(c.lecturerID));
+			lecturerID.forEach((c) => result.push(c.lecturer));
 			return result;
 		} catch (err) {
 			console.log(err);
@@ -83,4 +83,4 @@ class LecturerRepository {
 	}
 }
 
-module.exports = LecturerRepository;
+module.exports = new LecturerRepository();
