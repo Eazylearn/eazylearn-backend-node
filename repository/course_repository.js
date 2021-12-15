@@ -3,7 +3,7 @@ const StudentCourse = require("../model/student_course");
 const LecturerCourse = require("../model/lecturer_course");
 const studentRepository = require("./student_repository");
 const lecturerRepository = require("./lecturer_repository");
-
+const { Op } = require("sequelize");
 class CourseRepository {
 	async createCourse(id, name, academicYear, semester) {
 		try {
@@ -183,9 +183,9 @@ class CourseRepository {
 			const result = [];
 			var data;
 			var i = 0;
-			const course_per_page = 10;
+			const course_per_page = 5;
 			for (var c of course) {
-				if (i >= (page - 1) * course_per_page && i < page * course_per_page) {
+				if (i >= page * course_per_page && i < (page + 1) * course_per_page) {
 					const lec = await lecturerRepository.getLecturerByCourseID(
 						c.course_id
 					);
@@ -211,6 +211,21 @@ class CourseRepository {
 			return { courses: result, maxPage: maxPage };
 		} catch (err) {
 			console.log(err);
+			throw err;
+		}
+	}
+
+	async search(query) {
+		try {
+			const result = await Course.findAll({
+				where: {
+					course_id: {
+						[Op.iLike]: "%" + query + "%",
+					},
+				},
+			});
+			return result;
+		} catch (err) {
 			throw err;
 		}
 	}

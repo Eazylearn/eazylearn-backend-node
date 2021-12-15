@@ -1,4 +1,6 @@
 const courseRepository = require("../repository/course_repository");
+const lecturerRepository = require("../repository/lecturer_repository");
+const studentRepository = require("../repository/student_repository");
 const Error = require("../model/error");
 
 class CourseService {
@@ -144,7 +146,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 
@@ -160,7 +162,7 @@ class CourseService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 	async getLecturerByCourseID(course_id) {
@@ -170,6 +172,44 @@ class CourseService {
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
+		}
+	}
+
+	async search(query, page) {
+		try {
+			var course_per_page = 5;
+			var courses = await courseRepository.search(query);
+			const maxPage = Math.ceil(courses.length / course_per_page);
+			if (page == null) page = 0;
+			else if (page > maxPage - 1) throw new Error("Bad request", 400);
+
+			page = parseInt(page);
+
+			courses = courses.slice(
+				page * course_per_page,
+				(page + 1) * course_per_page
+			);
+			var result = [];
+			for (const c of courses) {
+				result.push({
+					course_id: c.course_id,
+					course_name: c.course_name,
+					academic_year: c.academic_year,
+					semester: c.semester,
+					lecturers: await lecturerRepository.getLecturerByCourseID(
+						c.course_id
+					),
+					students: await studentRepository.getStudentByCourseID(c.course_id),
+				});
+			}
+			return {
+				result: result,
+				maxPage: maxPage,
+			};
+		} catch (err) {
+			console.log(err);
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
 		}
 	}
 }
