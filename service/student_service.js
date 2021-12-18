@@ -75,6 +75,24 @@ class StudentService {
 			throw new Error(err.message, err.statusCode);
 		}
 	}
+	async enrollStudentToCourse(body,studentID) {
+		const {  courseID } = body;
+		if (studentID == null || courseID == null)
+			throw new Error("Bad request", 400);
+		try {
+			const result = await studentRepository.enrollStudentByCourseID(
+				courseID,
+				studentID
+				
+			);
+			return result;
+		} catch (err) {
+			console.log(err);
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err?.statusCode ?? new Error(err,500);
+		}
+	}
+
 }
 
 module.exports = StudentService;
