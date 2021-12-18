@@ -3,6 +3,15 @@ const Error = require("../model/error");
 const studentRepository = require("../repository/student_repository");
 
 class StudentService {
+	async getAllStudent() {
+		try {
+			return await studentRepository.getAllStudents();
+		} catch (err) {
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
+		}
+	}
+
 	async getStudentByID(ID) {
 		var result;
 		try {

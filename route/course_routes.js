@@ -2,10 +2,8 @@ const router = require("express").Router();
 
 const auth = require("../middleware/auth");
 const CourseService = require("../service/course_service");
-const LecturerService = require("../service/lecturer_service");
 
 const Error = require("../model/error");
-const { json } = require("express/lib/response");
 const courseService = new CourseService();
 
 router.post("/", auth, async (req, res) => {

@@ -1,6 +1,14 @@
 const Student = require("../model/student");
 const StudentCourse = require("../model/student_course");
 class StudentRepository {
+	async getAllStudents() {
+		try {
+			return await Student.findAll();
+		} catch (err) {
+			throw err;
+		}
+	}
+
 	async getStudentByCourseID(courseID) {
 		try {
 			const studentID = await StudentCourse.findAll({

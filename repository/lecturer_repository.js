@@ -1,6 +1,13 @@
 const Lecturer = require("../model/lecturer");
 const LecturerCourse = require("../model/lecturer_course");
 class LecturerRepository {
+	async getAllLecturers() {
+		try {
+			return await Lecturer.findAll();
+		} catch (err) {
+			throw err;
+		}
+	}
 	async getLecturerByCourseID(courseID) {
 		try {
 			const lecturerID = await LecturerCourse.findAll({

@@ -3,6 +3,15 @@ const Error = require("../model/error");
 const lecturerRepository = require("../repository/lecturer_repository");
 
 class LecturerService {
+	async getAllLecturers() {
+		try {
+			return await lecturerRepository.getAllLecturers();
+		} catch (err) {
+			if (err.statusCode == null) throw new Error(err, 500);
+			throw err;
+		}
+	}
+
 	async getLecturerByID(ID) {
 		var result;
 		try {
@@ -45,7 +54,7 @@ class LecturerService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 	async updateLecturerByID(qid, lecturer) {
@@ -61,7 +70,7 @@ class LecturerService {
 			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw new Error(err.message, err.statusCode);
+			throw err;
 		}
 	}
 }
