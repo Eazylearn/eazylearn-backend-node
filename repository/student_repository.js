@@ -91,6 +91,19 @@ class StudentRepository {
 			throw err;
 		}
 	}
+	async enrollStudentByCourseID(courseID, studentID) {
+		try {
+			const result = await StudentCourse.create({
+				course_id: courseID,
+				student_id: studentID,
+				status: 0
+			});
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
+	
 }
 
 module.exports = new StudentRepository();
