@@ -67,7 +67,7 @@ class CourseService {
 					lecturerID,
 					courseID
 				);
-				return result;
+				results.push(result);
 			} catch (err) {
 				if (err.statusCode == null) throw new Error(err, 500);
 				throw err;
@@ -178,7 +178,7 @@ class CourseService {
 					lecturerID,
 					courseID
 				);
-				return result;
+				results.push(result);
 			} catch (err) {
 				if (err.statusCode == null) throw new Error(err, 500);
 				throw err;
