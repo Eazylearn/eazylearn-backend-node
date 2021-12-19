@@ -15,6 +15,9 @@ const StudentCourse = sequelize.define(
 			type: DataTypes.STRING,
 			primaryKey: true,
 		},
+		status: {
+			type: DataTypes.STRING,
+		},
 	},
 	{
 		timestamps: false,
