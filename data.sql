@@ -30,10 +30,10 @@ VALUES('thduong', 'CS161'),
 	  ('vthoang', 'CS300');
 	  
 INSERT INTO Student_Course(student_id, course_id, status)
-VALUES('19125096', 'CS161', 'approved'),
-	  ('19125096', 'CS202', 'pending'),
-	  ('19125096', 'CS201', 'approved'),
-	  ('19125096', 'CS300', 'approved'),
-	  ('19125079', 'MTH251', 'pending'),
-	  ('19125079', 'CS202', 'pending'),
-	  ('19125079', 'CS300', 'approved');
+VALUES('19125096', 'CS161', 1),
+	  ('19125096', 'CS202', 0),
+	  ('19125096', 'CS201', 1),
+	  ('19125096', 'CS300', 1),
+	  ('19125079', 'MTH251', 0),
+	  ('19125079', 'CS202', 0),
+	  ('19125079', 'CS300', 1);

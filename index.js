@@ -16,7 +16,7 @@ app.use(routes);
 app.listen(process.env.PORT || 8080, async () => {
 	try {
 		await sequelize.authenticate();
-		//await sequelize.sync({ force: true });
+		await sequelize.sync({ force: true });
 		console.log("Server running!");
 	} catch (err) {
 		console.log(err);
