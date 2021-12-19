@@ -89,7 +89,7 @@ class StudentService {
 		} catch (err) {
 			console.log(err);
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw err?.statusCode ?? new Error(err,500);
+			throw err;
 		}
 	}
 
