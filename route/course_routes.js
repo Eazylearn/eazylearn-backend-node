@@ -2,7 +2,6 @@ const router = require("express").Router();
 
 const auth = require("../middleware/auth");
 const CourseService = require("../service/course_service");
-
 const Error = require("../model/error");
 const courseService = new CourseService();
 
@@ -55,7 +54,7 @@ router.get("/", auth, async (req, res) => {
 				req.user,
 				page
 			);
-			return res
+			return res	
 				.status(200)
 				.json({ status: "OK", courses: courses, maxPage: maxPage });
 		}
@@ -155,5 +154,4 @@ router.get("/search", async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
-
 module.exports = router;
