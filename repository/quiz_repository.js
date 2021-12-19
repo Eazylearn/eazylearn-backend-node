@@ -4,7 +4,7 @@ const QuizQuestion = require("../model/quiz_question");
 class QuizRepository {
 	async getQuizByCourseID(courseID) {
 		try {
-			const quizID = await QuizQuestion.findAll({
+			const quizID = await Quiz.findAll({
 				where: {
 					course_id: courseID,
 				},
