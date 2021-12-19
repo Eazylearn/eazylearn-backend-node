@@ -24,6 +24,7 @@ class CourseRepository {
 			const result = await StudentCourse.create({
 				course_id: courseID,
 				student_id: studentID,
+				status: 1,
 			});
 			return result;
 		} catch (err) {
@@ -219,9 +220,18 @@ class CourseRepository {
 		try {
 			const result = await Course.findAll({
 				where: {
-					course_id: {
-						[Op.iLike]: "%" + query + "%",
-					},
+					[Op.or]: [
+						{
+							course_id: {
+								[Op.iLike]: "%" + query + "%",
+							},
+						},
+						{
+							course_name: {
+								[Op.iLike]: "%" + query + "%",
+							},
+						},
+					],
 				},
 			});
 			return result;

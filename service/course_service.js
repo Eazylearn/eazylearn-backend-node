@@ -33,36 +33,47 @@ class CourseService {
 	}
 
 	async assignStudentToCourse(body) {
-		const { studentID, courseID } = body;
-		if (studentID == null || courseID == null)
-			throw new Error("Bad request", 400);
-		try {
-			const result = await courseRepository.assignStudentToCourse(
-				studentID,
-				courseID
-			);
-			return result;
-		} catch (err) {
-			console.log(err);
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw err;
+		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		const results = [];
+		for (const b of body.body) {
+			console.log(b);
+			const { studentID, courseID } = b;
+			if (studentID == null || courseID == null)
+				throw new Error("Bad request", 400);
+			try {
+				const result = await courseRepository.assignStudentToCourse(
+					studentID,
+					courseID
+				);
+				results.push(result);
+			} catch (err) {
+				console.log(err);
+				if (err.statusCode == null) throw new Error(err, 500);
+				throw err;
+			}
 		}
+		return results;
 	}
 
 	async assignLecturerToCourse(body) {
-		const { lecturerID, courseID } = body;
-		if (lecturerID == null || courseID == null)
-			throw new Error("Bad request", 400);
-		try {
-			const result = await courseRepository.assignLecturerToCourse(
-				lecturerID,
-				courseID
-			);
-			return result;
-		} catch (err) {
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw err;
+		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		const results = [];
+		for (const b of body.body) {
+			const { lecturerID, courseID } = b;
+			if (lecturerID == null || courseID == null)
+				throw new Error("Bad request", 400);
+			try {
+				const result = await courseRepository.assignLecturerToCourse(
+					lecturerID,
+					courseID
+				);
+				return result;
+			} catch (err) {
+				if (err.statusCode == null) throw new Error(err, 500);
+				throw err;
+			}
 		}
+		return results;
 	}
 
 	async getCourseByID(id) {
@@ -135,35 +146,45 @@ class CourseService {
 	}
 
 	async removeStudentFromCourse(body) {
-		const { studentID, courseID } = body;
-		if (studentID == null || courseID == null)
-			throw new Error("Bad request", 401);
-		try {
-			const result = await courseRepository.removeStudentFromCourse(
-				studentID,
-				courseID
-			);
-			return result;
-		} catch (err) {
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw err;
+		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		const results = [];
+		for (const b of body.body) {
+			const { studentID, courseID } = b;
+			if (studentID == null || courseID == null)
+				throw new Error("Bad request", 400);
+			try {
+				const result = await courseRepository.removeStudentFromCourse(
+					studentID,
+					courseID
+				);
+				results.push(result);
+			} catch (err) {
+				if (err.statusCode == null) throw new Error(err, 500);
+				throw err;
+			}
 		}
+		return results;
 	}
 
 	async removeLecturerFromCourse(body) {
-		const { lecturerID, courseID } = body;
-		if (lecturerID == null || courseID == null)
-			throw new Error("Bad request", 401);
-		try {
-			const result = await courseRepository.removeLecturerFromCourse(
-				lecturerID,
-				courseID
-			);
-			return result;
-		} catch (err) {
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw err;
+		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		const results = [];
+		for (const b of body.body) {
+			const { lecturerID, courseID } = b;
+			if (lecturerID == null || courseID == null)
+				throw new Error("Bad request", 400);
+			try {
+				const result = await courseRepository.removeLecturerFromCourse(
+					lecturerID,
+					courseID
+				);
+				return result;
+			} catch (err) {
+				if (err.statusCode == null) throw new Error(err, 500);
+				throw err;
+			}
 		}
+		return results;
 	}
 	async getLecturerByCourseID(course_id) {
 		try {
