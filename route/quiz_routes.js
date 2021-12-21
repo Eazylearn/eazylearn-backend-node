@@ -15,6 +15,7 @@ router.get("/", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
+/*
 router.get("/CourseID", auth, async (req, res) => {
 	try {
 
@@ -25,6 +26,7 @@ router.get("/CourseID", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
+*/
 router.put("/", auth, async (req, res) => {
 	try {
 		const type = req.user.type;

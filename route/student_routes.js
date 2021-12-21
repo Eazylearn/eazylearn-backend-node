@@ -26,4 +26,14 @@ router.post("/enroll", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
+router.put("/approve", auth, async (req, res) => {
+	try {
+		const type = req.user.type;
+		if (type !== 0) throw new Error("Unauthorized", 401);
+		const result = await studentService.approveStudentToCourse(req.body);
+		return res.status(200).json({ status: "OK", message: result });
+	} catch (err) {
+		return res.status(err.statusCode).json(err);
+	}
+});
 module.exports = router;
