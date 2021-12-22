@@ -54,7 +54,7 @@ router.get("/", auth, async (req, res) => {
 				req.user,
 				page
 			);
-			return res	
+			return res
 				.status(200)
 				.json({ status: "OK", courses: courses, maxPage: maxPage });
 		}

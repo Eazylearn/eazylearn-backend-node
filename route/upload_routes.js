@@ -9,7 +9,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 	try {
 		const image = req.file;
 		const url = await uploadService.save(image);
-		return res.status(200).json({ status: "Ok", url: url });
+		return res.status(200).json({ status: "OK", url: url });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}

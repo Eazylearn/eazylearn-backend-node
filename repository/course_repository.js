@@ -184,7 +184,7 @@ class CourseRepository {
 			const result = [];
 			var data;
 			var i = 0;
-			const course_per_page = 5;
+			const course_per_page = 2;
 			for (var c of course) {
 				if (i >= page * course_per_page && i < (page + 1) * course_per_page) {
 					const lec = await lecturerRepository.getLecturerByCourseID(

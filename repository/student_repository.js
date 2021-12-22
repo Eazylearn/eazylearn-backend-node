@@ -21,7 +21,11 @@ class StudentRepository {
 			});
 
 			const result = [];
-			studentID.forEach((c) => result.push(c.student));
+			studentID.forEach((c) => {
+				var student = c.student;
+				student.dataValues.status = c.status;
+				result.push(student);
+			});
 			return result;
 		} catch (err) {
 			console.log(err);
@@ -96,14 +100,13 @@ class StudentRepository {
 			const result = await StudentCourse.create({
 				course_id: courseID,
 				student_id: studentID,
-				status: 0
+				status: 0,
 			});
 			return result;
 		} catch (err) {
 			throw err;
 		}
 	}
-	
 }
 
 module.exports = new StudentRepository();

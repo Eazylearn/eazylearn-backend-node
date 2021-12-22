@@ -10,7 +10,7 @@ router.get("/", auth, async (req, res) => {
 	try {
 		if (req.user.type !== 0) throw new Error("Unauthorized", 401);
 		const lecturers = await lecturerService.getAllLecturers();
-		return res.status(200).json({ status: "Ok", lecturers: lecturers });
+		return res.status(200).json({ status: "OK", lecturers: lecturers });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
