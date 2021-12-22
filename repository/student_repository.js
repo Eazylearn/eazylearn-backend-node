@@ -107,6 +107,26 @@ class StudentRepository {
 			throw err;
 		}
 	}
+	async approveStudentByCourseID(courseID, studentID) {
+		try {
+			const result = await StudentCourse.update(
+				{
+					course_id: courseID,
+					student_id: studentID,
+					status: 1,
+				},
+				{
+					where: {
+						student_id: studentID,
+						course_id: courseID,
+					},
+				}
+			);
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
 }
 
 module.exports = new StudentRepository();

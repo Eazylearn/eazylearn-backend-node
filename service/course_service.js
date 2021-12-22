@@ -188,8 +188,21 @@ class CourseService {
 	}
 	async getLecturerByCourseID(course_id) {
 		try {
+			console.log("start");
 			const result = await courseRepository.getLecturerByCourseID(course_id);
-
+			
+			return result;
+		} catch (err) {
+			throw Error(err[0].message, 500);
+		}
+	}
+	async getQuizByCourseID(course_id) {
+		var result;
+		try {
+				result = await quizRepository.getQuizByCourseID(
+					course_id
+				);
+			
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
