@@ -23,9 +23,10 @@ router.post("/login", async (req, res) => {
 	}
 });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
 	try {
-		const result = await userService.getAccountByID(req.query.username);
+		console.log(req.user.account_id);
+		const result = await userService.getAccountByID(req.user.account_id);
 		return res.status(200).json({ status: "OK", user: result });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);

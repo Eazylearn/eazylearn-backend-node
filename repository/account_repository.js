@@ -1,6 +1,7 @@
 const Account = require("../model/account");
 const Student = require("../model/student");
 const Lecturer = require("../model/lecturer");
+const Admin = require("../model/admin");
 class AccountRepository {
 	async createAccount(username, password, type) {
 		try {
@@ -49,7 +50,8 @@ class AccountRepository {
 					},
 				});
 				return result;
-			}
+			} else if (account.type === 0)
+				return await Admin.findOne({ wherea: { account_id: username } });
 			return null;
 		} catch (err) {
 			throw err;

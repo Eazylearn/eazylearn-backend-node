@@ -13,6 +13,9 @@ INSERT INTO Lecturer(lecturer_id, lecturer_name, account_id)
 VALUES('thduong', 'Tran Hai Duong', 'thduong'),
 	  ('vthoang', 'Vu Thien Hoang', 'vthoang');
 	  
+INSERT INTO Admin(admin_id, admin_name, account_id)
+VALUES('ldhai', 'Le Dinh Hai', 'ldhai');
+
 INSERT INTO Course(course_id, course_name, academic_year, semester)
 VALUES('CS161', 'Introduction to Computer Science', '1', 1),
 	  ('MTH251', 'Calculus 1', '1', 1),
