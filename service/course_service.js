@@ -121,14 +121,13 @@ class CourseService {
 		)
 			throw new Error("Bad request", 400);
 		try {
-			const result = await courseRepository.updateCourseByID(
+			await courseRepository.updateCourseByID(
 				qid,
 				id,
 				name,
 				academicYear,
 				semester
 			);
-			return result;
 		} catch (err) {
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;

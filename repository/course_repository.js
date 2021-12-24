@@ -163,7 +163,6 @@ class CourseRepository {
 						},
 					}
 				);
-			return await this.getCourseByID(qid);
 		} catch (err) {
 			throw err;
 		}

@@ -87,8 +87,8 @@ router.put("/", auth, async (req, res) => {
 		const courseID = req.query.id;
 		if (courseID == null) throw new Error("Bad request", 401);
 		console.log("here");
-		const result = await courseService.updateCourseByID(courseID, req.body);
-		return res.status(200).json({ status: "OK", course: result });
+		await courseService.updateCourseByID(courseID, req.body);
+		return res.status(200).json({ status: "OK" });
 	} catch (err) {
 		console.log(err.statusCode);
 		return res.status(err.statusCode).json(err);
