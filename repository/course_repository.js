@@ -119,20 +119,51 @@ class CourseRepository {
 
 	async updateCourseByID(qid, id, name, academicYear, semester) {
 		try {
-			const result = await Course.update(
-				{
-					course_id: id,
-					course_name: name,
-					academic_year: academicYear,
-					semester: semester,
-				},
-				{
-					where: {
-						course_id: qid,
+			if (id)
+				await Course.update(
+					{
+						course_id: id,
 					},
-				}
-			);
-			return result;
+					{
+						where: {
+							course_id: qid,
+						},
+					}
+				);
+			if (name)
+				await Course.update(
+					{
+						course_name: name,
+					},
+					{
+						where: {
+							course_id: qid,
+						},
+					}
+				);
+			if (academicYear)
+				await Course.update(
+					{
+						academic_year: academicYear,
+					},
+					{
+						where: {
+							course_id: qid,
+						},
+					}
+				);
+			if (semester)
+				await Course.update(
+					{
+						semester: semester,
+					},
+					{
+						where: {
+							course_id: qid,
+						},
+					}
+				);
+			return await this.getCourseByID(qid);
 		} catch (err) {
 			throw err;
 		}

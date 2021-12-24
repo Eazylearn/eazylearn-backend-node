@@ -112,10 +112,10 @@ class CourseService {
 		const { id, name, academicYear, semester } = course;
 		if (
 			qid == null ||
-			id == null ||
-			name == null ||
-			academicYear == null ||
-			semester == null ||
+			(id == null &&
+				name == null &&
+				academicYear == null &&
+				semester == null) ||
 			semester < 0 ||
 			semester > 3
 		)
@@ -190,7 +190,7 @@ class CourseService {
 		try {
 			console.log("start");
 			const result = await courseRepository.getLecturerByCourseID(course_id);
-			
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);
@@ -199,10 +199,8 @@ class CourseService {
 	async getQuizByCourseID(course_id) {
 		var result;
 		try {
-				result = await quizRepository.getQuizByCourseID(
-					course_id
-				);
-			
+			result = await quizRepository.getQuizByCourseID(course_id);
+
 			return result;
 		} catch (err) {
 			throw Error(err[0].message, 500);

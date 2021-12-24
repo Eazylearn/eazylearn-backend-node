@@ -88,7 +88,7 @@ router.put("/", auth, async (req, res) => {
 		if (courseID == null) throw new Error("Bad request", 401);
 		console.log("here");
 		const result = await courseService.updateCourseByID(courseID, req.body);
-		return res.status(200).json({ status: "OK", message: result });
+		return res.status(200).json({ status: "OK", course: result });
 	} catch (err) {
 		console.log(err.statusCode);
 		return res.status(err.statusCode).json(err);
@@ -149,7 +149,7 @@ router.get("/search", async (req, res) => {
 		const { result, maxPage } = await courseService.search(query, page);
 		return res
 			.status(200)
-			.json({ status: "Ok", courses: result, maxPage: maxPage });
+			.json({ status: "OK", courses: result, maxPage: maxPage });
 	} catch (err) {
 		return res.status(err.statusCode).json(err);
 	}
