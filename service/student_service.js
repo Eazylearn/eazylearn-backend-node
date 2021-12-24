@@ -92,7 +92,10 @@ class StudentService {
 		}
 	}
 	async approveStudentToCourse(body) {
-		const {  courseID, studentID } = body;
+		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		const results = [];
+		for (const b of body.body){
+		const {  courseID, studentID } = b;
 		if (studentID == null || courseID == null)
 			throw new Error("Bad request", 400);
 		try {
@@ -100,12 +103,14 @@ class StudentService {
 				courseID,
 				studentID
 			);
-			return result;
+			results.push(result);
 		} catch (err) {
 			console.log(err);
 			if (err.statusCode == null) throw new Error(err, 500);
-			throw err?.statusCode ?? new Error(err,500);
+			throw err;
 		}
+	}
+	return results;
 	}
 	
 }
