@@ -6,15 +6,9 @@ const Error = require("../model/error");
 class CourseService {
 	async createCourse(course) {
 		try {
-			const { id, name, academicYear, semester } = course;
-			if (
-				id == null ||
-				name == null ||
-				academicYear == null ||
-				semester == null ||
-				semester < 0 ||
-				semester > 3
-			)
+			var { id, name, academicYear, semester } = course;
+			console.log(academicYear);
+			if (id == null || name == null || semester < 0 || semester > 3)
 				throw new Error(
 					"Bad request" + id + name + academicYear + semester,
 					400
@@ -27,6 +21,7 @@ class CourseService {
 			);
 			return result;
 		} catch (err) {
+			console.log(err);
 			if (err.statusCode == null) throw new Error(err, 500);
 			throw err;
 		}
