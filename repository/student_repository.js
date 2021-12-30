@@ -64,7 +64,7 @@ class StudentRepository {
 		try {
 			const result = await Student.create({
 				student_id: id,
-				studentn_name: name,
+				student_name: name,
 				class_id: classID,
 				account_id: accountID,
 			});
