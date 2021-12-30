@@ -6,7 +6,7 @@ const Error = require("../model/error");
 class CourseService {
 	async createCourse(course) {
 		try {
-			var { id, name, academicYear, semester } = course;
+			const { id, name, academicYear, semester } = course;
 			console.log(academicYear);
 			if (id == null || name == null || semester < 0 || semester > 3)
 				throw new Error(
@@ -28,7 +28,8 @@ class CourseService {
 	}
 
 	async assignStudentToCourse(body) {
-		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		if (!body.body || body.body.constructor !== Array)
+			throw new Error("Bad request", 400);
 		const results = [];
 		for (const b of body.body) {
 			console.log(b);
@@ -51,7 +52,8 @@ class CourseService {
 	}
 
 	async assignLecturerToCourse(body) {
-		if (body.body.constructor !== Array) throw new Error("Bad request", 400);
+		if (!body.body || body.body.constructor !== Array)
+			throw new Error("Bad request", 400);
 		const results = [];
 		for (const b of body.body) {
 			const { lecturerID, courseID } = b;

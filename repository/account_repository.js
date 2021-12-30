@@ -1,16 +1,27 @@
 const Account = require("../model/account");
-const Student = require("../model/student");
-const Lecturer = require("../model/lecturer");
-const Admin = require("../model/admin");
+const studentRepository = require("../repository/student_repository");
+const lecturerRepository = require("../repository/lecturer_repository");
+const adminRepository = require("../repository/admin_repository");
 class AccountRepository {
-	async createAccount(username, password, type) {
+	async createAccount(username, password, type, name, classId) {
 		try {
-			const newAccount = await Account.create({
+			await Account.create({
 				account_id: username,
 				password: password,
 				type: type,
 			});
-			return newAccount;
+			if (type == 0) {
+				await adminRepository.createAdmin(username, name, username);
+			} else if (type == 1) {
+				await lecturerRepository.createLecturerByID(username, name, username);
+			} else if (type == 2) {
+				await studentRepository.createStudentByID(
+					username,
+					name,
+					classId,
+					username
+				);
+			}
 		} catch (err) {
 			throw err;
 		}
@@ -37,21 +48,11 @@ class AccountRepository {
 				},
 			});
 			if (account.type === 1) {
-				const result = await Lecturer.findOne({
-					where: {
-						account_id: username,
-					},
-				});
-				return result;
+				return await lecturerRepository.getLecturerByID(username);
 			} else if (account.type === 2) {
-				const result = await Student.findOne({
-					where: {
-						account_id: username,
-					},
-				});
-				return result;
+				return await studentRepository.getStudentByID(username);
 			} else if (account.type === 0)
-				return await Admin.findOne({ wherea: { account_id: username } });
+				return await adminRepository.getAdminByID(username);
 			return null;
 		} catch (err) {
 			throw err;

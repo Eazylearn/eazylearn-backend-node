@@ -10,21 +10,53 @@ function generateToken(account_id, type) {
 }
 
 class AccountService {
-	async signUp(user) {
-		const { username, password, type } = user;
-		if (!username || !password || type === null || type < 0 || type > 2)
+	async createAccount(body) {
+		if (!body.body || body.body.constructor !== Array)
 			throw new Error("Bad request", 400);
-		try {
-			const createdUser = await accountRepository.createAccount(
-				username,
-				password,
-				type
-			);
-			return generateToken(createdUser.account_id, createdUser.type);
-		} catch (err) {
-			if (err.statusCode == null) throw new Error(err, 500);
-			throw err;
+		const successful = [];
+		const duplicates = [];
+		const badRequests = [];
+		for (const user of body.body) {
+			const { username, password, type, name, classId } = user;
+			if (
+				!username ||
+				!password ||
+				type === null ||
+				(type == 2 && !classId) ||
+				!name ||
+				type < 0 ||
+				type > 2
+			)
+				badRequests.push(username);
+			else {
+				try {
+					if ((await accountRepository.findAccount(username)) === null) {
+						await accountRepository.createAccount(
+							username,
+							password,
+							type,
+							name,
+							classId
+						);
+						successful.push(username);
+					} else duplicates.push(username);
+				} catch (err) {
+					if (err.statusCode == null) throw new Error(err, 500);
+					throw err;
+				}
+			}
 		}
+		if (badRequests.length > 0)
+			throw new Error(
+				{
+					message: "Bad request",
+					successful: successful,
+					badRequests: badRequests,
+					duplicates: duplicates,
+				},
+				400
+			);
+		return { successful: successful, duplicates: duplicates };
 	}
 
 	async login(user) {

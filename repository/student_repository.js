@@ -34,15 +34,13 @@ class StudentRepository {
 	}
 	async getStudentByID(ID) {
 		try {
-			const student = await Student.findAll({
+			const student = await Student.findOne({
 				where: {
-					lecture_id: ID,
+					student_id: ID,
 				},
 			});
 
-			const result = [];
-			student.forEach((c) => result.push(c.student));
-			return result;
+			return student;
 		} catch (err) {
 			console.log(err);
 			throw err;

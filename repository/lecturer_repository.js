@@ -29,15 +29,12 @@ class LecturerRepository {
 	}
 	async getLecturerByID(ID) {
 		try {
-			const lecturer = await Lecturer.findAll({
+			const lecturer = await Lecturer.findOne({
 				where: {
-					lecture_id: ID,
+					lecturer_id: ID,
 				},
 			});
-
-			const result = [];
-			lecturer.forEach((c) => result.push(c.lecturer));
-			return result;
+			return lecturer;
 		} catch (err) {
 			console.log(err);
 			throw err;

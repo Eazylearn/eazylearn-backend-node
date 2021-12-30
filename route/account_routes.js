@@ -1,16 +1,29 @@
 const router = require("express").Router();
-
+const Error = require("../model/error");
 const auth = require("../middleware/auth");
 const AccountService = require("../service/account_service");
 
 const userService = new AccountService();
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
 	try {
-		token = await userService.signUp(req.body);
-		return res.status(200).json({ status: "OK", token: token });
+		if (req.user.type) throw new Error("Unauthorized", 401);
+		const { successful, duplicates } = await userService.createAccount(
+			req.body
+		);
+		return res
+			.status(200)
+			.json({ status: "OK", successful: successful, duplicates: duplicates });
 	} catch (err) {
-		return res.status(err.statusCode).json(err);
+		console.log(err);
+		const { message, successful, badRequests, duplicates } = err.message;
+		return res.status(err.statusCode).json({
+			message: message,
+			successful: successful,
+			badRequests: badRequests,
+			duplicates: duplicates,
+			statusCode: err.statusCode,
+		});
 	}
 });
 

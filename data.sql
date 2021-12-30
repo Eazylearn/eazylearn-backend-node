@@ -4,7 +4,7 @@ VALUES('19125096', '123', 2),
 	  ('thduong', '123', 1),
 	  ('vthoang', '123', 1),
 	  ('ldhai', '123', 0);
-
+	  
 INSERT INTO Student(student_id, student_name, class_id, account_id)
 VALUES('19125096', 'Vu Duc Huy', '19CTT2', '19125096'),
 	  ('19125079', 'Le Gia Bao', '19CTT2', '19125079');
