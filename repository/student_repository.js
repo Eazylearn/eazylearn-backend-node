@@ -78,7 +78,7 @@ class StudentRepository {
 			const result = await Course.update(
 				{
 					student_id: id,
-					studentn_name: name,
+					student_name: name,
 					class_id: classID,
 					account_id: accountID,
 				},
