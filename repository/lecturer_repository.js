@@ -58,7 +58,7 @@ class LecturerRepository {
 		try {
 			const result = await Lecturer.create({
 				lecturer_id: id,
-				lecturern_name: name,
+				lecturer_name: name,
 				account_id: accountID,
 			});
 			return result;
@@ -71,7 +71,7 @@ class LecturerRepository {
 			const result = await Course.update(
 				{
 					lecturer_id: id,
-					lecturern_name: name,
+					lecturer_name: name,
 					account_id: accountID,
 				},
 				{
