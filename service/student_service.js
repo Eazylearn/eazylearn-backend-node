@@ -1,3 +1,4 @@
+const QuestionRepository = require("../repository/student_repository");
 const Error = require("../model/error");
 const studentRepository = require("../repository/student_repository");
 
