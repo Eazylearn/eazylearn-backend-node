@@ -15,18 +15,7 @@ router.get("/", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
-/*
-router.get("/CourseID", auth, async (req, res) => {
-	try {
 
-		const course_id = req.query.course_id;
-		const quiz = await quizService.getQuizByCourseID(course_id);
-		return res.status(200).json({ status: "OK", quiz: quiz });
-	} catch (err) {
-		return res.status(err.statusCode).json(err);
-	}
-});
-*/
 router.put("/", auth, async (req, res) => {
 	try {
 		const type = req.user.type;
