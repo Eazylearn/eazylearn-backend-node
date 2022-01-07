@@ -1,4 +1,3 @@
-const QuestionRepository = require("../repository/lecturer_repository");
 const Error = require("../model/error");
 const lecturerRepository = require("../repository/lecturer_repository");
 
