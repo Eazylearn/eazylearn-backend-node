@@ -133,6 +133,14 @@ router.delete("/remove/lecturer", auth, async (req, res) => {
 		return res.status(err.statusCode).json(err);
 	}
 });
+// router.get("/admin", auth, async (req, res) => {
+// 	try {
+// 		const result = await courseService.getCourseByAdmin(1);
+// 		return res.status(200).json({ status: "OK", list: result });
+// 	} catch (err) {
+// 		return res.status(err.statusCode).json(err);
+// 	}
+// });
 
 router.get("/search", async (req, res) => {
 	try {
